@@ -1,0 +1,4384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>ARKAN||ID</title>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript"></script>
+    'use script';
+	<style>
+		.centered {
+			text-align: center;
+			font-family: monospace;
+			font-size: 1.2em;
+		}
+
+		.loader {
+			-webkit-animation: rotation 2s infinite linear;
+			-moz-animation: rotation 2s infinite linear;
+			-o-animation: rotation 2s infinite linear;
+			-ms-animation: rotation 2s infinite linear;
+			animation: rotation 2s infinite linear;
+			display: block;
+			margin: 0 auto;
+		}
+
+		@-webkit-keyframes rotation {
+			0% {
+				-webkit-transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(360deg);
+			}
+		}
+
+		@-moz-keyframes rotation {
+			0% {
+				-moz-transform: rotate(0deg);
+			}
+			100% {
+				-moz-transform: rotate(360deg);
+			}
+		}
+
+		@-o-keyframes rotation {
+			0% {
+				-o-transform: rotate(0deg);
+			}
+			100% {
+				-o-transform: rotate(360deg);
+			}
+		}
+
+		@-ms-keyframes rotation {
+			0% {
+				-ms-transform: rotate(0deg);
+			}
+			100% {
+				-ms-transform: rotate(360deg);
+			}
+		}
+
+		@keyframes rotation {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		} 
+	</style>
+	<!-- external resources -->
+	<link rel="stylesheet" href="ARKANorID/style.css">
+	<script src="ARKANorID/script.js"></script>
+	<!-- external resources end -->
+</head>
+<body>
+	<div id="loading">
+		<span class="centered">Loading...</span>
+		<svg class="loader" width="64" height="64">
+			<circle cx="32" cy="16" r="16" fill="red" />
+			<circle cx="46" cy="40" r="16" fill="green" />
+			<circle cx="18" cy="40" r="16" fill="blue" />
+			<circle cx="32" cy="32" r="16" fill="white" />
+		</svg> 
+	</div>
+	<canvas id="game"></canvas>
+	<div id="strip">---</div>
+	<div id="controls">
+		<div id="left">◄</div>
+		<div id="fire">▲</div>
+		<div id="right">►</div>
+	</div>
+	<div id="game-menu">
+		<h1>ARKAN||ID</h1>
+		<h2>game</h2>
+		<ul id="menu-list">
+			<li class="line-under"><span id="play-btn">PLAY</span></li>
+			<li class="line-under"><span id="controls-btn">CONTROLS</span></li>
+			<li class="line-under"><span id="options-btn">OPTIONS</span></li>
+			<li class="line-under"><span id="about-btn">ABOUT</span></li>
+		</ul>
+	</div>
+	<div id="game-story">
+		<span><br><br>
+			THE ERA AND TIME OF<br>
+			THIS STORY IS UNKNOWN.<br>
+			<br>
+			AFTER THE NOSTALGIA FOR<br>
+			RETRO-GAMES AROSE,<br>
+			AMAZING APP "SOLOLEARN"<br>
+			WAS OPENED, AND "K137"<br>
+			BEGAN TO CODE THIS GAME.<br>
+			<br>
+			NOT JUST FOR SELF-STUDY,<br>
+			BUT ALSO TO ALLOW SOMEONE<br>
+			TO LEARN AND PLAY TOO......
+		</span><br><br>
+		<div class="line-under"><button id="start-btn" class="btn">KUDOS</button></div>
+	</div>
+	<div id="game-controls">
+		<span><br><br>
+			You can move the platform to the left by pressing ◄ button below || by pushing ◄ button on your keyboard || by tilting your device in this ◄ way (you must first enable it in the options).<br><br>
+			Also you can move the platform to the right by pressing ► button below || by pushing ► button on your keyboard || by tilting your device in this ► way (you must first enable it in the options).<br><br>
+			You can even cast the ball || shoot the laser by pressing ▲ button below || by pushing ▲ button on your keyboard.
+		</span><br><br>
+		<div class="line-under"><button class="back-btn btn">◄BACK</button></div>
+	</div>
+	<div id="game-options">
+		<span class="line-under"><br><br>
+			Tilt settings:
+		</span><br><br>
+		<form id="options-form">
+			<input type="checkbox" id="tilting-input" name="tilting" value="false">
+			<label for="tilting-input" id="tilting-label" class="option">Enable tilting the device?</label>
+			<br>(FYI: While it is on, you cannot use ◄ or ► buttons)
+			<span class="line-under"><br><br>
+				Sound settings:
+			</span><br><br>
+			<input type="checkbox" id="sounding-input" name="sounding" value="false">
+			<label for="sounding-input" id="sounding-label" class="option">Enable the game sounds?</label>
+			<span class="line-under"><br><br>
+				Volume settings:
+			</span><br><br>
+			<input type="radio" name="volume" data-value="0.2" id="volume-02" class="volume-radio">
+			<label for="volume-02" class="volume-label option">volume: ■■□□□□□□□□ (0.2)</label><br>
+			<input type="radio" name="volume" data-value="0.5" id="volume-05" class="volume-radio" checked>
+			<label for="volume-05" class="volume-label option">volume: ■■■■■□□□□□ (0.5)</label><br>
+			<input type="radio" name="volume" data-value="0.7" id="volume-07" class="volume-radio">
+			<label for="volume-07" class="volume-label option">volume: ■■■■■■■□□□ (0.7)</label><br>
+			<input type="radio" name="volume" data-value="1.0" id="volume-10" class="volume-radio">
+			<label for="volume-10" class="volume-label option">volume: ■■■■■■■■■■ (1.0)</label>
+		</form><br><br>
+		<div class="line-under"><button class="back-btn btn" id="sound-check">◄BACK</button></div>
+	</div>
+	<div id="game-about">
+		<span><br><br>
+			Author:<br>
+			Game created by K137 2019<br>
+			Original game:<br>
+			Arkanoid by Taito 1986<br>
+			Font source:<br>
+			<a href="https://www.1001freefonts.com/old-game-fatty.font">
+				https://www.1001freefonts.com/old-game-fatty.font
+			</a><br>
+			Sounds source:<br>
+			Bfxr sound program<br>
+			<a href="https://www.bfxr.net/">
+				https://www.bfxr.net/
+			</a><br>
+			Platform:<br>
+			SoloLearn app<br>
+			<a href="https://www.sololearn.com/">
+				https://www.sololearn.com/
+			</a>
+		</span><br><br>
+		<div class="line-under"><button class="back-btn btn">◄BACK</button></div>
+	</div>
+	<div id="game-over">
+		<span class="line-under"><br><br>
+			GAME OVER
+		</span><br><br>
+		<div class="line-under"><button class="btn" id="restart" onclick="reinit();">◄MENU</button></div>
+	</div>
+	<div id="game-options-min">
+		<span id="opt">☼<span id="close">close</span></span>
+		<div id="options-min-menu">
+			<input type="checkbox" id="tilting-input-min" name="tilting-min" value="false">
+			<label for="tilting-input-min" id="tilting-label-min">↔</label><br>
+			<input type="checkbox" id="sounding-input-min" name="sounding-min" value="false">
+			<label for="sounding-input-min" id="sounding-label-min">♫</label>
+		</div>
+	</div>
+	<script>
+		/**/
+/**/
+'use strict';
+var game, canvas, CW, CH, context, cols, width, height, W, H, W2, W5, W10, H2, SW, SH, test, highPts, points, score, highScore, lives, level, colors, bgGradient, maps, keys, strip, controls, player, platformSpeed, balls, ballSpeed, capsuleSpeed, laserSpeed, bricks, m, gameMenu, tilting, tiltingInput, sounding, soundingInput, factor, auto, currentLvl, currentBg, bg0, bg1, bg2, bg3, sounds, volume, form, vols, playBtn, controlsBtn, optionsBtn, aboutBtn, backBtns, gameMenu, gameStory, gameControls, gameOptions, gameAbout, gameOver, startBtn, limit, capsules, lasers, portals, opt, optM, close, tiltingMin, soundingMin, soundCheck, loading, restart, inner;
+function dtr(a) { //degrees to radians convertor
+	return a * Math.PI / 180;
+}
+function rtd(a) { //radians to degrees transformation function
+	return a * 180 / Math.PI;
+}
+function random(min, max) { //this function returns random integer from given range
+	return Math.floor(Math.random() * (1 + max - min) + min);
+}
+function drawFR(x, y, w, h, c, ctx) { //a filled rectangle primitive
+	if(ctx) {
+		ctx.fillStyle = c;
+		ctx.fillRect(x, y, w, h);
+	} else {
+		context.fillStyle = c;
+		context.fillRect(x, y, w, h);
+	}
+}
+function drawSR(x, y, w, h, c, ctx) { //stroke rect object
+	if(ctx) {
+		ctx.strokeStyle = c;
+		ctx.strokeRect(x, y, w, h);
+	} else {
+		context.strokeStyle = c;
+		context.strokeRect(x, y, w, h);
+	}
+}
+function drawFC(x, y, r, c, ctx) { //drawing filled circular shape
+	if(ctx) {
+		ctx.fillStyle = c;
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2, false);
+		ctx.closePath();
+		ctx.fill();
+	} else {
+		context.fillStyle = c;
+		context.beginPath();
+		context.arc(x, y, r, 0, Math.PI * 2, false);
+		context.closePath();
+		context.fill();
+	}
+}
+function drawSC(x, y, r, c, ctx) { //function for stroke arc
+	if(ctx) {
+		ctx.strokeStyle = c;
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2, false);
+		ctx.closePath();
+		ctx.stroke();
+	} else {
+		context.strokeStyle = c;
+		context.beginPath();
+		context.arc(x, y, r, 0, Math.PI * 2, false);
+		context.closePath();
+		context.stroke();
+	}
+}
+function drawFT(t, x, y, c, s) { //filled text drawing function
+	context.fillStyle = c;
+	context.font = s + 'px OldGameFatty';
+	context.fillText(t, x, y);
+}
+function drawST(t, x, y, c, s) { //draw stroke text
+	context.strokeStyle = c;
+	context.font = s + 'px OldGameFatty';
+	context.strokeText(t, x, y);
+}
+function clear() { //function for cleaning (out of sight && out of mind) (!fun joke)
+	context.clearRect(0, 0, width, height);
+}
+function drawBackground() { //paint our background with gradient
+	drawFR(0, 0, width, height, bgGradient);
+}
+function drawBorder() { //game border draw function (place, where game exists)
+	for(var x = 0; x < W * (cols + 1); x += W) {
+		drawFR(H + x, H, W, H, colors[2]);
+	}
+	for(var y = 0; y < height; y += W) {
+		if(y <= W * 4) drawFR(H, H + y, H, W, colors[2]);
+		if(y >= W * 4 && y < W * 8) drawFR(H, H + y, H, W, colors[3]);
+		if(y >= W * 8 && y < W * (cols + 1)) drawFR(H, H + y, H, W, colors[4]);
+		if(y >= W * (cols + 1)) drawFR(H, H + y, H, W, colors[5]);
+	}
+	for(var y = 0; y < height; y += W) {
+		if(y <= W * 4) drawFR(W * (cols + 1), H + y, H, W, colors[2]);
+		if(y >= W * 4 && y < W * 8) drawFR(W * (cols + 1), H + y, H, W, colors[3]);
+		if(y >= W * 8 && y < W * (cols + 1)) drawFR(W * (cols + 1), H + y, H, W, colors[4]);
+		if(y >= W * (cols + 1)) drawFR(W * (cols + 1), H + y, H, W, colors[5]);
+	}
+}//drawBorder end
+function drawInfo() { //here we draw all information such as score and player lives counter
+	drawFT('HI', W * (cols + 1) + H + H / 2, W * 2 + H, colors[2], H);
+	drawFT('PTS:', W * (cols + 1) + H + H / 2, W * 2 + H * 2, colors[2], H);
+	drawFT(highPts, W * (cols + 1) + H + H / 2, W * 2 + H * 3 + H, colors[2], H);
+	drawFT('PTS:', W * (cols + 1) + H + H / 2, W * 2 + H * 4 + H * 2, colors[3], H);
+	drawFT(points, W * (cols + 1) + H + H / 2, W * 2 + H * 5 + H * 3, colors[3], H);
+	drawFT('HP:', W * (cols + 1) + H + H / 2, W * 2 + H * 6 + H * 4, colors[4], H);
+	drawFT(lives, W * (cols + 1) + H + H / 2, W * 2 + H * 7 + H * 5, colors[4], H);
+	drawFT('LVL:', W * (cols + 1) + H + H / 2, W * 2 + H * 8 + H * 6, colors[5], H);
+	drawFT(level, W * (cols + 1) + H + H / 2, W * 2 + H * 9 + H * 7, colors[5], H);
+}//drawInfo end
+function createBgImages() {//function, which draw many simple objects onto a canvas, snapshot its data, and then create a background image
+	var canvas = document.createElement('canvas');
+	canvas.width = SW;
+	canvas.height = SH;
+	var context = canvas.getContext('2d');
+	//0
+	drawFR(0, 0, width, height, colors[24], context);
+	for(var y = 0; y <= height; y += W) {
+		for(var x = 0; x <= width; x += W) {
+			if(x % 2 === 0) {
+				drawFR(x, y, W, H, colors[24], context);
+				drawFR(x, y + H, W, H, colors[25], context);
+				drawFR(x + H / 2, y + H / 2, W, H, colors[25], context);
+				drawFR(x + H / 2, y + H + H / 2, W, H, colors[24], context);
+			} else {
+				drawFR(x, y, W, H, colors[25], context);
+				drawFR(x, y + H, W, H, colors[24], context);
+				drawFR(x + H / 2, y + H / 2, W, H, colors[24], context);
+				drawFR(x + H / 2, y + H + H / 2, W, H, colors[25], context);
+			}
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg0 = document.createElement('img');
+	bg0.width = width;
+	bg0.height = height;
+	bg0.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//1
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[26], context);
+			drawFR(x + W / 2 - H / 4, y + W - H + H / 2, H / 2, H / 4, colors[27], context);
+			drawFC(x + W / 2, y + W / 2, H / 2, colors[27], context);
+			drawFC(x + W / 2, y, H, colors[27], context);
+			drawFC(x + W / 2 - W / 5, y + H / 3, H / 4, colors[26], context);
+			drawFC(x + W / 2 + W / 5, y + H / 3, H / 4, colors[26], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg1 = document.createElement('img');
+	bg1.width = width;
+	bg1.height = height;
+	bg1.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//2
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[28], context);
+			drawFR(x + W / 5, y + W / 5, W, W, colors[29], context);
+			drawFR(x + W / 4, y + W / 4, W, W, colors[28], context);
+			drawFC(x + W / 2, y + H / 2 - W / 5, H / 2, colors[29], context);
+			drawSC(x + W / 2, y + H / 2 + W / 5, H / 4, colors[29], context);
+			drawFR(x + W - W / 5, y + H / 2, W / 2, W / 2, colors[29], context);
+			drawFR(x + W - W / 2, y + H / 2 + H / 3, W / 2, W / 2, colors[28], context);
+			drawFR(x + H / 3, y + H / 2 + H / 3 - W / 5 + H, W / 2, W / 2, colors[29], context);
+			drawFR(x + H / 3 - H / 5, y + H / 2 + H / 3 - W / 5 - H / 5 + H, W / 2, W / 2, colors[28], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg2 = document.createElement('img');
+	bg2.width = width;
+	bg2.height = height;
+	bg2.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//3
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[30], context);
+			drawFR(x + W / 2, y + W, H / 2, H, colors[31], context);
+			drawFR(x + W / 4, y + W, H / 3, H / 3, colors[31], context);
+			drawSR(x + W / 2, y + W / 2, H / 2, H, colors[31], context);
+			drawSR(x + W / 3, y + W + H / 3, H, H * 2, colors[31], context);
+			drawFR(x + W / 4, y + W, H / 2, H * 2 - H / 3, colors[31], context);
+			drawFR(x, y + W + W / 2, H / 2, H, colors[31], context);
+			drawFR(x + W / 4, y, H / 3, H / 3, colors[31], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg3 = document.createElement('img');
+	bg3.width = width;
+	bg3.height = height;
+	bg3.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+}//createBgImages end
+function drawLvlBg(idx) { //function for drawing represented image
+	if(idx === 0) {
+		context.drawImage(bg0, W, W, SW, SH);
+	} else if(idx === 1) {
+		context.drawImage(bg1, W, W, SW, SH);
+	} else if(idx === 2) {
+		context.drawImage(bg2, W, W, SW, SH);
+	} else {
+		context.drawImage(bg3, W, W, SW, SH);
+	}
+}
+function switchLvlBg() { //it's a switcher for current background
+	if(currentBg >= 4) currentBg = 0;
+	switch(currentBg) {
+		case 0: drawLvlBg(0); break;
+		case 1: drawLvlBg(1); break;
+		case 2: drawLvlBg(2); break;
+		case 3: drawLvlBg(3); break;
+	}
+}
+function Sound(src, vol) { //class for game sounds
+	this.src = src;
+	this.vol = vol; //initial volume
+	this.elem = document.createElement('audio');
+	this.elem.volume = this.vol;
+	for(var q = 0; q < src.length; q += 1) {
+		var source = document.createElement('source');
+		source.src = src[q];
+		this.elem.appendChild(source);
+	}
+	document.body.appendChild(this.elem);
+}
+Sound.prototype.setVolume = function(volume) {
+	this.elem.volume = volume;
+};
+Sound.prototype.play = function() {
+	this.elem.currentTime = 0;
+	this.elem.play();
+};
+Sound.prototype.playLoop = function() {
+	this.elem.loop = true;
+	this.elem.play();
+};
+Sound.prototype.toggleLoop = function() {
+	this.elem.loop = !this.elem.loop;
+};
+Sound.prototype.stop = function() {
+	this.elem.pause();
+	this.elem.currentTime = 0;
+};
+Sound.prototype.pause = function() {
+	this.elem.pause();
+};
+function createSounds() { //this is process of filling our sounds array with Sound objects
+	for(var s in soundSrc) {
+		sounds[s] = new Sound([soundSrc[s][0], soundSrc[s][1], soundSrc[s][2]], volume);
+	}
+}
+function setVol() { //as the name implies, this function is for setting volume
+	for(var q = 0; q < vols.length; q += 1) {
+		if(vols[q].checked) {
+			volume = Number(vols[q].dataset.value);
+		}
+	}
+	for(var s in sounds) {
+		sounds[s].setVolume(volume);
+	}
+	playBtnSnd();
+}//setVol end
+function showAndHide(show, hide) { //here we show one DOM element (or none) and hide other element(s)
+	if(show) show.style.display = 'block';
+	if(hide.length) {
+		for(var q = 0; q < hide.length; q += 1) {
+			hide[q].style.display = 'none';
+		}
+	} else {
+		hide.style.display = 'none';
+	}
+}//showAndHide end
+function calcProbability(threshold) { //this function determines, what chance of drop a game bonus
+	var rnd = random(0, threshold);
+	var leftChanceRng = Math.floor(threshold / 2) - Math.floor(threshold / 20);
+	var rightChanceRng = Math.floor(threshold / 2) + Math.floor(threshold / 20);
+	if(rnd >= leftChanceRng && rnd <= rightChanceRng) return true;
+	return false;
+}//calcProbability end
+function levels() {//main function, inside it, all the game stuff (drawing, collision detection and other conditions) really try to be executed 60 times per second. (does this work for them is a completely different question) (another !fun joke)
+	clear(); //clear previous frame
+	drawBackground(); //yeah, draw it
+	switchLvlBg(); //which of the backgrounds is currently drawn
+	highPts = highPts > points ? highPts : points; //update hi points
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) { //for all game bricks
+		bricks[currentLvl][q].draw(); //draw them
+		bricks[currentLvl][q].checkL(); //check they lives
+	}
+	drawBorder(); //game edges here is drawn
+	drawInfo(); //drawing game score, amount of player lives and current level number
+	player.move(); //make the player move (a little shaking does not hurt, come on, do not sit) (another !fun joke)
+	player.draw(); //draw the player (platform)
+	for(var q = balls.length - 1; q >= 0; q -= 1) { //for all game balls
+		if(balls[q]) balls[q].move(); //if it's exist, move it
+		if(balls[q]) balls[q].draw(); //and if it's exist, draw it
+	}
+	if(keys['fire'] && balls[balls.length - 1]) { //launching the ball in free flight
+		if(balls[balls.length - 1].sticky) {
+			balls[balls.length - 1].y -= H;
+			balls[balls.length - 1].dx = balls[balls.length - 1].dx ? balls[balls.length - 1].dx : 1;
+			balls[balls.length - 1].dy = balls[balls.length - 1].dy ? -balls[balls.length - 1].dy : -1;
+			balls[balls.length - 1].s = ballSpeed;
+		}
+		balls[balls.length - 1].sticky = false;
+	}
+	for(var q = balls.length - 1; q >= 0; q -= 1) { //checking, if any of balls reach bottom edge of the game
+		if(balls[q] && balls[q].deletable) {
+			balls.splice(q, 1);
+			if(sounding) sounds.ballFlyaway.play();
+			if(balls.length === 0) {
+				lives -= 1;
+				changeState('normal');
+			}
+			if(lives > 0 && balls.length === 0) { //add new Ball object, if it's possible
+				balls.push(new Ball(player.x + player.w / 2, player.y - H / 2, true));
+				for(var q = portals.length - 1; q >= 0; q -= 1) {
+					portals[q].deletable = true;
+				}
+			}
+		}
+	}
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) { //here we determine, what will happen, when game brick is destroyed (breaking = !building) (another !fun joke)
+		if(bricks[currentLvl][q].deletable) {
+			var x = bricks[currentLvl][q].x;
+			var y = bricks[currentLvl][q].y;
+			points += bricks[currentLvl].splice(q, 1)[0].p;
+			if(sounding) sounds.brickDestroyed.play();
+			if(calcProbability(limit)) {
+				var rnd = random(0, 6);
+				switch(rnd) { //adding new Capsule game object
+					case 0: capsules.push(new Capsule(x, y, 'E')); break; //what is E, D, L... (see Capsule class below)
+					case 1: capsules.push(new Capsule(x, y, 'D')); break;
+					case 2: capsules.push(new Capsule(x, y, 'L')); break;
+					case 3: capsules.push(new Capsule(x, y, 'S')); break;
+					case 4: capsules.push(new Capsule(x, y, 'B')); break;
+					case 5: capsules.push(new Capsule(x, y, 'C')); break;
+					case 6: capsules.push(new Capsule(x, y, 'P')); break;
+				}
+			}
+		}
+	}
+	if(auto && player && balls[balls.length - 1]) { //don't touch this, at least if you're not cheater (another !fun joke) (when cheats mode on, it's useful for testing)
+		player.x = balls[balls.length - 1].x - player.w / 2;
+	}
+	if(bricks[currentLvl].length === 0) { //ok, it seems, player completed current level
+		if(sounding) sounds.newLvl.play();
+		changeState('normal');
+		currentBg += 1;
+		currentLvl += 1;
+		level = currentLvl + 1;
+		player.x = SW / 2;
+		balls.length = 1;
+		capsules.length = 0;
+		lasers.length = 0;
+		if(balls[balls.length - 1]) {
+			balls[balls.length - 1].x = player.x + player.w / 2;
+			balls[balls.length - 1].y = player.y - H / 2;
+			balls[balls.length - 1].sticky = true;
+			balls[balls.length - 1].a = dtr(45);
+		}
+		for(var q = portals.length - 1; q >= 0; q -= 1) {
+			portals[q].deletable = true;
+		}
+	}
+	for(var q = capsules.length - 1; q >= 0; q -= 1) { //if game bonus (capsule) tries to delete itself from array, let it be
+		if(capsules[q].d) capsules.splice(q, 1);
+	}
+	for(var q = capsules.length - 1; q >= 0; q -= 1) { //moving and drawing game bonuses, also determination Y position of them
+		capsules[q].move();
+		capsules[q].draw();
+		if(capsules[q].y >= height) capsules[q].d = true;
+	}
+	for(var q = lasers.length - 1; q >= 0; q -= 1) { //remove laser from its array, if it's needed
+		if(lasers[q].d) {
+			lasers.splice(q, 1);
+		}
+	}
+	for(var q = lasers.length - 1; q >= 0; q -= 1) { //pew-pew (what game without shooting) (another !fun joke)
+		lasers[q].move();
+		lasers[q].draw();
+		if(lasers[q].y <= W) lasers[q].d = true;
+	}
+	for(var q = portals.length - 1; q >= 0; q -= 1) { //delete the portal, if it's time
+		if(portals[q].deletable) {
+			portals.splice(q, 1);
+		}
+	}
+	for(var q = portals.length - 1; q >= 0; q -= 1) { //game portal is drawn here
+		portals[q].draw();
+	}
+	if(lives <= 0 || currentLvl === 33) { //checking of "game over" state
+		setGameover();
+	}
+	if(sounding && gameMenu.clientHeight) { //playing menu theme
+		sounds.menu.playLoop();
+	} else if(sounding && !gameMenu.clientHeight) {
+		sounds.menu.stop();
+	}
+}//levels end
+function setGameover() { //any game can over
+	var receivedLives = lives;
+	var receivedLvl = currentLvl;
+	lives = 3;
+	currentLvl = 0;
+	score = points * factor;
+	highScore = highScore > score ? highScore : score;
+	inner = '';
+	inner += '<span class="line-under"><br><br>GAME OVER</span><br><br>';
+	inner += '<div class="line-under"><button class="btn" id="restart" onclick="reinit();">◄MENU</button></div>';
+	if(receivedLvl === 33 && receivedLives > 0) {
+		inner += '<span class="line-under"><br>CONGRATULATIONS !!!</span><br>';
+		inner += '<span class="centered text-min">DIMENSION-CONTROLLING FORT "D||H",</span><br>';
+		inner += '<span class="centered text-min">WHICH CAPTURED THE "SL LOGO", HAS</span><br>';
+		inner += '<span class="centered text-min">NOW BEEN DEMOLISHED, "SL LOGO"</span><br>';
+		inner += '<span class="centered text-min">RELEASED AND MANAGED TO ESCAPE</span><br>';
+		inner += '<span class="centered text-min">FROM DISTORTED SPACE. KNOWLEDGE,</span><br>';
+		inner += '<span class="centered text-min">RECEIVED WHILE MAKING "ARKAN||ID"</span><br>';
+		inner += '<span class="centered text-min">GAME, WAS VERY USEFUL, BUT THE</span><br>';
+		inner += '<span class="centered text-min">REAL CODE-VOYAGE OF "K137" HAS</span><br>';
+		inner += '<span class="centered text-min">ONLY STARTED......I HOPE, YOU</span><br>';
+		inner += '<span class="centered text-min">ENJOYED THIS JOURNEY SAME, AS ME.</span><br>';
+		inner += '<span class="centered text-min">THANKS FOR PLAYING AND LEARNING.</span><br>';
+	} else if(receivedLives <= 0) {
+		inner += '<span class="centered">Reason: Not enough HP.</span><br>';
+		inner += '<span class="centered">Solution: Please, try again.</span><br>';
+	}
+	inner += '<span class="line-under"><br>Your score:</span><br>';
+	inner += '<span class="centered">' + score + '<br></span><br>';
+	inner += '<span class="line-under">High score:</span><br>';
+	inner += '<span class="centered">' + highScore + '<br></span><br>';
+	gameOver.innerHTML = inner;
+	gameOver.style.display = 'block';
+}//setGameover end
+function startGame() { //function, that starts main game cycle
+	loop();
+}
+function setGame(fun) { //here we can set any function to execute. In our case it is "levels" function
+	game = fun; //Yup, game is fun (another !fun joke)
+}
+function loop() { //main game cycle function
+	game();
+	requestAnimationFrame(loop);
+}
+function down(e) { //event handler for mousedown, touchstart and keydown events
+	if(e) e.preventDefault();
+	if(tilting) {
+		if(e.keyCode && e.keyCode === 38) {
+			keys.fire = true;
+			return;
+		}
+	}
+	if(e.keyCode && !tilting) {
+		switch(e.keyCode) {
+			case 37: keys.left = true; break;
+			case 38: keys.fire = true; break;
+			case 39: keys.right = true; break;
+		}
+		return;
+	}
+	if(tilting) {
+		if(e.target.id === 'fire') {
+			keys.fire = true;
+			e.target.style.backgroundColor = colors[3];
+		}
+	}
+	if(!tilting) {
+		switch(e.target.id) {
+			case 'left': keys.left = true; break;
+			case 'fire': keys.fire = true; break;
+			case 'right': keys.right = true; break;
+		}
+		e.target.style.backgroundColor = colors[3];
+	}
+}//down end
+function addLaser(code, id) { //function, that adds new Laser object randomly
+	if((code === 38 || id === 'fire') && player.armed) {
+		var r = random(0, 1);
+		if(r) {
+			lasers.push(new Laser(player.x + player.w / 4 - W10 / 2, player.y - W10));
+			if(sounding) sounds.laserShoot.play();
+		} else {
+			lasers.push(new Laser(player.x + player.w - player.w / 4 - W10 / 2, player.y - W10));
+			if(sounding) sounds.laserShoot.play();
+		}
+	}
+}//addLaser end
+function up(e) { //event handler for mouseup, touchend and keyup events
+	if(e) e.preventDefault();
+	if(tilting) {
+		if(e.keyCode && e.keyCode === 38) {
+			keys.fire = false;
+			addLaser(e.keyCode, false);
+			return;
+		}
+	}
+	if(e.keyCode && !tilting) {
+		switch(e.keyCode) {
+			case 37: keys.left = false; break;
+			case 38: keys.fire = false; break;
+			case 39: keys.right = false; break;
+		}
+		addLaser(e.keyCode, false);
+		return;
+	}
+	if(tilting) {
+		if(e.target.id === 'fire') {
+			keys.fire = false;
+			e.target.style.backgroundColor = '';
+			addLaser(false, e.target.id);
+		}
+	}
+	if(!tilting) {
+		switch(e.target.id) {
+			case 'left': keys.left = false; break;
+			case 'fire': keys.fire = false; break;
+			case 'right': keys.right = false; break;
+		}
+		e.target.style.backgroundColor = '';
+		addLaser(false, e.target.id);
+	}
+}//up end
+function playBtnSnd() { //just a little sound for the buttons
+	if(sounding) sounds.menuBtn.play();
+}
+function init() { //in this huge function, all the global variables will be defined, also event listeners will be attached
+	canvas = document.querySelector('#game');
+	CW = Math.floor(window.innerWidth / 3) - 1;
+	CH = Math.floor(window.innerHeight / 4);
+	width = canvas.width = window.innerWidth;
+	height = canvas.height = window.innerHeight - CH;
+	context = canvas.getContext('2d');
+	cols = 13;
+	W = height > width ? Math.floor(width / 16) : Math.floor(height / 16);
+	H = Math.floor(W / 2);
+	SW = W * cols;
+	SH = height - W;
+	W2 = H;
+	W5 = Math.floor(W / 5);
+	W10 = Math.floor(W / 10);
+	H2 = Math.floor(H / 2);
+	//test = 0;
+	highPts = 0;
+	points = 0;
+	score = 0;
+	highScore = 0;
+	lives = 3;
+	level = 1;
+	colors = [
+		'#111203',//0
+		'#252908',//=1
+		'#697E1E',//2
+		'#6D9D30',//3//#80A92F
+		'#80A92F',//4//#6D9D30
+		'#A5C942',//'#A5D942',//5
+		'#A2BF90',//6
+		'#2647A6',//7E-expand//prize capsules
+		'#6F9EDD',//8D-divide
+		'#D13056',//9L-laser
+		'#FE8CA7',//10S-slow
+		'#D141EB',//'#E756DE',//11B-breakthrough
+		'#68E350',//12C-catch
+		'#AFAFAF',//13P-player
+		'#909F9C',//g0-gray2-5//blocks//14
+		'#CF1906',//r1-red1//15
+		'#CFC103',//y2-yellow//16
+		'#006DAF',//b3-blue//17
+		'#DF7DA3',//p4-pink//18
+		'#00D803',//q5-green//19
+		'#C7D7C8',//w6-white//20
+		'#DF9100',//o7-orange//21
+		'#01E3AF',//c8-cyan//22
+		'#C2A50D',//G9-gold6//23
+		'#020AAF',//1//24
+		'#020773',//1//25
+		'#008003',//2//26
+		'#006100',//2//27
+		'#023183',//3//28
+		'#121138',//3//29
+		'#A1352C',//4//30
+		'#525152',//31
+		'#BC6A02',//32
+		'#740C07',//33
+		'rgba(128, 128, 128, 0.5)'//34
+	];
+	bgGradient = context.createLinearGradient(0, 0, 0, height);
+	bgGradient.addColorStop(0, colors[1]);
+	bgGradient.addColorStop(1, colors[0]);
+	maps = [ //design of all levels was taken from the original game
+		[//0
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ggggggggggggg',
+			'rrrrrrrrrrrrr',
+			'yyyyyyyyyyyyy',
+			'bbbbbbbbbbbbb',
+			'ppppppppppppp',
+			'qqqqqqqqqqqqq'
+		],
+		[//1
+			'=============',
+			'=============',
+			'w============',
+			'wo===========',
+			'woc==========',
+			'wocq=========',
+			'wocqr========',
+			'wocqrb=======',
+			'wocqrbp======',
+			'wocqrbpy=====',
+			'wocqrbpyw====',
+			'wocqrbpywo===',
+			'wocqrbpywoc==',
+			'wocqrbpywocq=',
+			'ggggggggggggr'
+		],
+		[//2
+			'=============',
+			'=============',
+			'=============',
+			'qqqqqqqqqqqqq',
+			'=============',
+			'wwwGGGGGGGGGG',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'=============',
+			'GGGGGGGGGGwww',
+			'=============',
+			'ppppppppppppp',
+			'=============',
+			'bbbGGGGGGGGGG',
+			'=============',
+			'ccccccccccccc',
+			'=============',
+			'GGGGGGGGGGccc'
+		],
+		[//3
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=ocqgb=ywocq=',
+			'=cqgbp=wocqg=',
+			'=qgbpy=ocqgb=',
+			'=gbpyw=cqgbp=',
+			'=bpywo=qgbpy=',
+			'=pywoc=gbpyw=',
+			'=ywocq=bpywo=',
+			'=wocqg=pywoc=',
+			'=ocqgb=ywocq=',
+			'=cqgbp=wocqg=',
+			'=qgbpy=ocqgb=',
+			'=gbpyw=cqgbp=',
+			'=bpywo=qgbpy=',
+			'=pywoc=gbpyw='
+		],
+		[//4
+			'=============',
+			'===y=====y===',
+			'===y=====y===',
+			'====y===y====',
+			'====y===y====',
+			'===ggggggg===',
+			'===ggggggg===',
+			'==ggrgggrgg==',
+			'==ggrgggrgg==',
+			'=ggggggggggg=',
+			'=ggggggggggg=',
+			'=ggggggggggg=',
+			'=g=ggggggg=g=',
+			'=g=g=====g=g=',
+			'=g=g=====g=g=',
+			'====gg=gg====',
+			'====gg=gg===='
+		],
+		[//5
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=GoGoGoGoG=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'o=o=G=o=G=o=o',
+			'b=r=q=c=q=r=b'
+		],
+		[//6
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=====yyp=====',
+			'====yyppb====',
+			'===yyppbbr===',
+			'===yppbbrr===',
+			'==yppbbrrqq==',
+			'==ppbbrrqqc==',
+			'==pbbrrqqcc==',
+			'==bbrrqqcco==',
+			'==brrqqccoo==',
+			'==rrqqccoow==',
+			'===qqccoow===',
+			'===qccooww===',
+			'====cooww====',
+			'=====oww====='
+		],
+		[//7
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'===G=G=G=G===',
+			'=G=========G=',
+			'=GG=G===G=GG=',
+			'======w======',
+			'=G===GoG===G=',
+			'===G==c==G===',
+			'======q======',
+			'===G==r==G===',
+			'=G===GbG===G=',
+			'======p======',
+			'=GG=G===G=GG=',
+			'=G=========G=',
+			'===G=G=G=G==='
+		],
+		[//8
+			'=============',
+			'=============',
+			'=GbG=====GbG=',
+			'=GqG=====GqG=',
+			'=GcG=====GcG=',
+			'=GGG=====GGG=',
+			'=============',
+			'====pwwwy====',
+			'====poooy====',
+			'====pcccy====',
+			'====pqqqy====',
+			'====prrry====',
+			'====pbbby===='
+		],
+		[//9
+			'=G===========',
+			'=============',
+			'=G===========',
+			'=G===========',
+			'=G===========',
+			'=G=====b=====',
+			'=G====bcb====',
+			'=G===bcwcb===',
+			'=G==bcwcwcb==',
+			'=G=bcwcgcwcb=',
+			'=G==bcwcwcb==',
+			'=G===bcwcb===',
+			'=G====bcb====',
+			'=G=====b=====',
+			'=G===========',
+			'=G===========',
+			'=G===========',
+			'=GGGGGGGGGGGG'
+		],
+		[//10
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=ggggggggggg=',
+			'=g=========g=',
+			'=g=ggggggg=g=',
+			'=g=g=====g=g=',
+			'=g=g=ggg=g=g=',
+			'=g=g=g=g=g=g=',
+			'=g=g=ggg=g=g=',
+			'=g=g=====g=g=',
+			'=g=ggggggg=g=',
+			'=g=========g=',
+			'=ggggggggggg='
+		],
+		[//11
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'GGGGGGGGGGGGG',
+			'====G=====Gp=',
+			'=Gw-G=====G==',
+			'=G==G==G==G==',
+			'=G==Gq=G==G==',
+			'=G==G==G==G==',
+			'=G=oG==G=bG==',
+			'=G==G==G==G==',
+			'=G==G==G==G==',
+			'=G==G=rG==G==',
+			'=G==G==G==G==',
+			'=Gc====G=====',
+			'=G=====G====y',
+			'=GGGGGGGGGGGG'
+		],
+		[//12
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=yyy=www=yyy=',
+			'=ppp=ooo=ppp=',
+			'=bbb=ccc=bbb=',
+			'=rrr=qqq=rrr=',
+			'=qqq=rrr=qqq=',
+			'=ccc=bbb=ccc=',
+			'=ooo=ppp=ooo=',
+			'=www=yyy=www='
+		],
+		[//13
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'bbbbbbbbbbbbb',
+			'G===========G',
+			'bbbbbbbbbbbbb',
+			'=============',
+			'ogggggggggggo',
+			'G===========G',
+			'wwwwwwwwwwwww',
+			'=============',
+			'cgggggggggggc',
+			'G===========G',
+			'rrrrrrrrrrrrr',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'G===========G'
+		],
+		[//14
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'cwGcccccccGwc',
+			'cwyGcccccGqwc',
+			'cwyyGcccGqqwc',
+			'cwyyyGwGqqqwc',
+			'cwyyyywqqqqwc',
+			'cwyyyywqqqqwc',
+			'cwyyyywqqqqwc',
+			'cgyyyywqqqqgc',
+			'ccgyyywqqqgcc',
+			'cccgyywqqgccc',
+			'ccccgywqgcccc',
+			'cccccgwgccccc'
+		],
+		[//15
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'======G======',
+			'====ww=ww====',
+			'==ww==G==ww==',
+			'ww==oo=oo==ww',
+			'==oo==G==oo==',
+			'oo==yy=yy==oo',
+			'==yy==G==yy==',
+			'yy==qq=qq==yy',
+			'==qq==G==qq==',
+			'qq==rr=rr==qq',
+			'==rr==G==rr==',
+			'rr==bb=bb==rr',
+			'==bb=====bb==',
+			'bb=========bb'
+		],
+		[//16
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'======g======',
+			'===bbbgqqq===',
+			'==bbbwwwqqq==',
+			'==bbwwwwwqq==',
+			'=bbbwwwwwqqq=',
+			'=bbbwwwwwqqq=',
+			'=bbbwwwwwqqq=',
+			'=g==g=g=g==g=',
+			'======g======',
+			'======g======',
+			'======g======',
+			'====G=G======',
+			'====GGG======',
+			'=====G======='
+		],
+		[//17
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'o=GyyyyyyyG=o',
+			'o=GGyyyyyGG=o',
+			'o=G=GyyyG=G=o',
+			'o=G=pGyGb=G=o',
+			'o=G=p=g=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'oGGGp=q=bGGGo'
+		],
+		[//18
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==GGGGGGGGG==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpypbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==GGGGGGGGG=='
+		],
+		[//19
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'GwGoGcGqGrGbG',
+			'GpGgGgGgGgGyG',
+			'=============',
+			'GpG=G=G=G=G=G',
+			'G=GpG=G=G=G=G',
+			'G=G=GpG=G=G=G',
+			'G=G=G=GpG=G=G',
+			'G=G=G=G=GpG=G',
+			'===========p=',
+			'==G=G=G=GpG==',
+			'==G=G=GpG=G==',
+			'==G=GpG=G=G==',
+			'===pG=G=G====',
+			'=p====G======'
+		],
+		[//20
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=GoooooooooG=',
+			'=G=========G=',
+			'=G=GGGGGGG=G=',
+			'=G=G=====G=G=',
+			'=G=G=====G=G=',
+			'=G=G=rrr=G=G=',
+			'=G=G=qqq=G=G=',
+			'=G=G=bbb=G=G=',
+			'=G=G=www=G=G=',
+			'=G=G=====G=G=',
+			'=G=GcccccG=G=',
+			'=G=========G=',
+			'=G=========G=',
+			'=GGGGGGGGGGG='
+		],
+		[//21
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yyyyyyyyyyyyy',
+			'yyyyyyyyyyyyy',
+			'=============',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'=============',
+			'wwwwwwwwwwwww',
+			'wwwwwwwwwwwww'
+		],
+		[//22
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ccccccccccccc',
+			'=============',
+			'==ggg=ggg=ggg',
+			'==gqg=gqg=gqg',
+			'==ggg=ggg=ggg',
+			'=============',
+			'=ggg=ggg=ggg=',
+			'=grg=grg=grg=',
+			'=ggg=ggg=ggg=',
+			'=============',
+			'ggg=ggg=ggg==',
+			'gbg=gbg=gbg==',
+			'ggg=ggg=ggg=='
+		],
+		[//23
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=====www=====',
+			'=====www=====',
+			'=====www=====',
+			'====wwwww====',
+			'====wbwbw====',
+			'===wbbwbbw===',
+			'===bbbbbbb===',
+			'==bbbbbbbbb==',
+			'==bbbbbbbbb==',
+			'=bbbbbbbbbbb=',
+			'bbbbbbbbbbbbb'
+		],
+		[//24
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'qqqqqqqqqqqqq',
+			'bbbbbbbbbbbbb',
+			'GGGGGgggGGGGG',
+			'GrrrG===GbbbG',
+			'GrrrG===GbbbG',
+			'G===========G',
+			'G===========G',
+			'G===GqqqG===G',
+			'G===GqqqG===G',
+			'GgggGGGGGgggG'
+		],
+		[//25
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==GgggG======',
+			'=G=====G=====',
+			'G==ccc==G====',
+			'G=qqqqq=G====',
+			'G=bbbbb=G====',
+			'G==ppp==G====',
+			'=G=====G=====',
+			'==GGGGG======'
+		],
+		[//26
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ggggggggggggg',
+			'yyyyyyyyyyyyy',
+			'ggggggggggggg',
+			'=============',
+			'ggggggggggggg',
+			'rrrrrrrrrrrrr',
+			'ggggggggggggg'
+		],
+		[//27
+			'=============',
+			'=============',
+			'=============',
+			'bbbbbbbbbbbbb',
+			'bGGGGpGpGGGGb',
+			'bG=========Gb',
+			'bGp=======pGb',
+			'bGpp=====ppGb',
+			'bGppp===pppGb',
+			'=bGppp=pppGb=',
+			'==bGpppppGb==',
+			'===bGpppGb===',
+			'====bGpGb====',
+			'=====bpb=====',
+			'======b======'
+		],
+		[//28
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yyyyyG=Gyyyyy',
+			'pppppG=Gppppp',
+			'GGwGGG=GGGwGG',
+			'bbbbbG=Gbbbbb',
+			'rrrrrG=Grrrrr',
+			'qqqqqG=Gqqqqq',
+			'ggwggG=Gggwgg',
+			'cccccG=Gccccc',
+			'oooooG=Gooooo',
+			'wwwwwG=Gwwwww'
+		],
+		[//29
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yp===========',
+			'ypbr=========',
+			'ypbrqc=======',
+			'ypbrqcow=====',
+			'ypbrqcowyp===',
+			'gpbrqcowypbr=',
+			'=Ggrqcowypbrq',
+			'===Ggcowypbrq',
+			'=====Ggwypbrq',
+			'=======Ggpbrq',
+			'=========Ggrq',
+			'===========Gg'
+		],
+		[//30
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'q=r=b=p=y=w=o',
+			'g=g=g=g=g=g=g',
+			'=b=r=q=c=o=w=',
+			'=g=g=g=g=g=g=',
+			'c=q=r=b=p=y=w',
+			'g=g=g=g=g=g=g',
+			'=p=b=r=q=c=o=',
+			'=g=g=g=g=g=g=',
+			'o=c=q=r=b=p=y',
+			'g=g=g=g=g=g=g',
+			'=y=p=b=r=q=c=',
+			'=g=g=g=g=g=g=',
+			'w=o=c=q=r=b=p',
+			'g=g=g=g=g=g=g'
+		],
+		[//31
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==G=G=G=G=G==',
+			'==G=G=G=G=G==',
+			'==G=G=G=Gqq==',
+			'==G=G=G=G=G==',
+			'==G=G=Grrrr==',
+			'==G=G=G=G=G==',
+			'==G=Gbbbbbb==',
+			'==G=G=G=G=G==',
+			'==Gpppppppp==',
+			'==G=G=G=G=G==',
+			'==yyyyyyyyy==',
+			'==ggggggggg=='
+		],
+		[//32//SOLOLEARN LOGO
+			'=====oooo====',
+			'===qoooooo===',
+			'==qqoooo=====',
+			'=qq=oo==rrrr=',
+			'=qqoo=rrrrrr=',
+			'=qqo=====p=rr',
+			'bqqo=====pp=r',
+			'bqqo======ppr',
+			'bqqo======pp=',
+			'b=q=======pp=',
+			'bbqq=====cpp=',
+			'bb=q=====cpp=',
+			'bbbqq====cpp=',
+			'=bb==bb=ccpp=',
+			'=bbbbb=cccpp=',
+			'======cccpp==',
+			'===ccccc=pp==',
+			'====ccccpp==='
+		],
+		[//33
+			'GG'//good game (another !fun joke)
+		]
+	];
+	keys = {}; //keys object, used for determine, which of buttons or keys are active (inactive)
+	player = new Platform(SW / 2, SH - H);
+	platformSpeed = 4;
+	ballSpeed = platformSpeed;
+	capsuleSpeed = 3;
+	laserSpeed = capsuleSpeed;
+	balls = [];
+	balls[0] = new Ball(player.x + player.w / 2, player.y - H / 2, true);
+	bricks = [];
+	for(var q = 0; q < maps.length; q += 1) { //here we watch all of the maps and create bricks array for this game
+		m = maps[q];
+		bricks[q] = [];
+		for(var y = 0; y < m.length; y += 1) {
+			for(var x = 0; x < m[y].length; x += 1) {
+				if(m[y][x] === '=') continue;
+				bricks[q].push(new Brick(x * W + W, y * H + W, m[y][x]));
+			}
+		}
+	}
+	strip = document.querySelector('#strip'); //beauty wears no pants (another !fun joke)
+	strip.style.width = width + 'px';
+	strip.style.height = H + 'px';
+	controls = document.querySelector('#controls');
+	for(var q = 0; q < controls.children.length; q += 1) {
+		controls.children[q].style.width = CW + 'px';
+		controls.children[q].style.height = (CH - H) + 'px';
+		controls.children[q].style.fontSize = W + 'px';
+	}
+	controls.addEventListener('mousedown', down, false);
+	controls.addEventListener('mouseup', up, false);
+	controls.addEventListener('touchstart', down, false);
+	controls.addEventListener('touchend', up, false);
+	window.addEventListener('keydown', down, false);
+	window.addEventListener('keyup', up, false);
+	gameMenu = document.querySelector('#game-menu');
+	tilting = false;
+	tiltingInput = document.querySelector('#tilting-input');
+	tiltingInput.addEventListener('change', function() {
+		playBtnSnd();
+		tilting = !tilting;
+		tiltingMin.checked = !tiltingMin.checked;
+	}, false);
+	sounding = false;
+	soundingInput = document.querySelector('#sounding-input');
+	soundingInput.addEventListener('change', function() {
+		playBtnSnd();
+		sounding = !sounding;
+		soundingMin.checked = !soundingMin.checked;
+	}, false);
+	factor = 1E3;
+	auto = false;
+	currentLvl = 0;
+	currentBg = 0;
+	sounds = {};
+	volume = 0.5;
+	form = document.forms[0];
+	vols = form.elements.volume;
+	for(var q = 0; q < vols.length; q += 1) {
+		vols[q].addEventListener('change', setVol, false);
+	}
+	playBtn = document.getElementById('play-btn');
+	controlsBtn = document.getElementById('controls-btn');
+	optionsBtn = document.getElementById('options-btn');
+	aboutBtn = document.getElementById('about-btn');
+	backBtns = document.getElementsByClassName('back-btn');//[]
+	gameMenu = document.getElementById('game-menu');
+	gameStory = document.getElementById('game-story');
+	gameControls = document.getElementById('game-controls');
+	gameOptions = document.getElementById('game-options');
+	gameAbout = document.getElementById('game-about');
+	gameOver = document.getElementById('game-over');
+	startBtn = document.getElementById('start-btn');
+	playBtn.addEventListener('click', function() {
+		showAndHide(gameStory, gameMenu);
+		playBtnSnd();
+	}, false);
+	controlsBtn.addEventListener('click', function() {
+		showAndHide(gameControls, gameMenu);
+		playBtnSnd();
+	}, false);
+	optionsBtn.addEventListener('click', function() {
+		showAndHide(gameOptions, gameMenu);
+		playBtnSnd();
+	}, false);
+	aboutBtn.addEventListener('click', function() {
+		showAndHide(gameAbout, gameMenu);
+		playBtnSnd();
+	}, false);
+	for(var q = 0; q < backBtns.length; q += 1) {
+		backBtns[q].addEventListener('click', function() {
+			showAndHide(gameMenu, [gameControls, gameOptions, gameAbout, gameOver]);
+			playBtnSnd();
+		}, false);
+	}
+	startBtn.addEventListener('click', function() {
+		showAndHide(null, gameStory);
+		playBtnSnd();
+	}, false);
+	limit = 1E2;
+	capsules = [];
+	lasers = [];
+	portals = [];
+	window.addEventListener('devicemotion', function(e) {
+		if(!e.accelerationIncludingGravity || !tilting) return;
+		var accel = e.accelerationIncludingGravity;
+		var xa = accel.x;
+		if(xa > 1) {
+			keys['left'] = true;
+		} else if(xa < -1) {
+			keys['right'] = true;
+		} else {
+			keys['left'] = false;
+			keys['right'] = false;
+		}
+	}, false);
+	opt = document.querySelector('#opt');
+	optM = document.querySelector('#options-min-menu');
+	close = document.querySelector('#close');
+	opt.addEventListener('click', function() {
+		playBtnSnd();
+		if(optM.clientHeight) {
+			optM.style.display = 'none';
+			close.style.display = 'none';
+		} else {
+			optM.style.display = 'block';
+			close.style.display = 'inline';
+		}
+	}, false);
+	tiltingMin = document.querySelector('#tilting-input-min');
+	tiltingMin.addEventListener('change', function() {
+		playBtnSnd();
+		tilting = !tilting;
+		tiltingInput.checked = !tiltingInput.checked;
+	}, false);
+	soundingMin = document.querySelector('#sounding-input-min');
+	soundingMin.addEventListener('change', function() {
+		playBtnSnd();
+		sounding = !sounding;
+		soundingInput.checked = !soundingInput.checked;
+	}, false);
+	soundCheck = document.querySelector('#sound-check');
+	soundCheck.addEventListener('click', function() {
+		if(sounding) {
+			sounds.menuBtn.play();
+		}
+	}, false);
+	loading = document.querySelector('#loading');
+	restart = document.querySelector('#restart');
+	restart.addEventListener('click', reinit, false);
+	inner = '';
+	window.addEventListener('dblclick', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('selectstart', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
+	createSounds(); //ok, variables and listeners are done, now we can call functions to: create sounds,
+	createBgImages(); //create images
+	setGame(levels); //setting our cycle to main function
+	startGame(); //and finally, start our game, uh yeah
+	loading.style.display = 'none'; //hide loading div
+}//init end
+function reinit() { //this function is used, when game is over to redefine some things, such as score, positions, bricks array, background
+	playBtnSnd();
+	showAndHide(gameMenu, gameOver);
+	points = 0;
+	score = 0;
+	lives = 3;
+	currentLvl = 0;
+	level = currentLvl + 1;
+	player = new Platform(SW / 2, SH - H);
+	balls[0] = new Ball(player.x + player.w / 2, player.y - H / 2, true);
+	bricks.length = 0;
+	for(var q = 0; q < maps.length; q += 1) {
+		m = maps[q];
+		bricks[q] = [];
+		for(var y = 0; y < m.length; y += 1) {
+			for(var x = 0; x < m[y].length; x += 1) {
+				if(m[y][x] === '=') continue;
+				bricks[q].push(new Brick(x * W + W, y * H + W, m[y][x]));
+			}
+		}
+	}
+	currentBg = 0;
+}//reinit end
+function Platform(x, y) { //player (platform) class
+	this.x = x;
+	this.y = y;
+	this.s = platformSpeed;
+	this.d = 0;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.expandable = true;
+	this.w = W * 2;
+	this.armed = false;
+}
+Platform.prototype.setSpeed = function(speed) {
+	this.s = speed;
+};
+Platform.prototype.setX = function(x) {
+	this.x = x;
+};
+Platform.prototype.setW = function(w) {
+	this.w = w;
+};
+Platform.prototype.draw = function() {
+	if(this.armed) {
+		drawSR(this.x, this.y, this.w, H, colors[0]);
+		drawFR(this.x, this.y, this.w, H, colors[5]);
+		drawFR(this.x, this.y, this.w, H2, colors[34]);
+		drawFR(this.x + this.w / 8, this.y + H / 2, this.w / 4, H / 2, colors[2]);
+		drawFR(this.x + this.w - this.w / 8 - this.w / 4, this.y + H / 2, this.w / 4, H / 2, colors[2]);
+		drawSR(this.x + this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawSR(this.x + this.w - this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawFR(this.x + this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawFR(this.x + this.w - this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+	} else {
+		drawSR(this.x, this.y, this.w, H, colors[0]);
+		drawFR(this.x, this.y, this.w, H, colors[5]);
+		drawFR(this.x, this.y, this.w, H2, colors[34]);
+	}
+};
+Platform.prototype.move = function() {
+	if(keys['left']) {
+		this.d = -1;
+		this.s = platformSpeed;
+	}
+	if(keys['right']) {
+		this.d = 1;
+		this.s = platformSpeed;
+	}
+	if(!keys['right'] && !keys['left']) this.d = this.s = 0;
+	this.nx = this.x + this.d * this.s;
+	if(portals.length) {
+		if(sidesColl(this.nx, this.ny, this.nx + this.w, this.ny + H, portals[portals.length - 1].x - H, portals[portals.length - 1].y, portals[portals.length - 1].x + W, portals[portals.length - 1].y + H * 3)) {
+			if(sounding) sounds.portal.play();
+			portals[portals.length - 1].deletable = true;
+			bricks[currentLvl].length = 0;
+		}
+	}
+	if(this.nx <= W || this.nx >= SW + W - this.w) return;
+	this.x = this.nx;
+};
+function Ball(x, y, s) { //ball class
+	this.x = x;
+	this.y = y;
+	this.sticky = s ? true : false;
+	this.s = ballSpeed;
+	this.dx = 1;
+	this.dy = -1;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.deletable = false;
+	this.a = dtr(45);
+	this.stickable = false;
+}
+Ball.prototype.setSpeed = function(speed) {
+	this.s = speed;
+};
+Ball.prototype.draw = function() {
+	drawSC(this.x, this.y, H / 2 - W10, colors[0]);
+	drawFC(this.x, this.y, H / 2 - W10, colors[6]);
+};
+Ball.prototype.move = function() {
+	this.a %= Math.PI * 2;
+	if(this.a < 0) this.a += Math.PI * 2;
+	if(!this.sticky) {
+		this.nx = this.x + this.dx * this.s * Math.cos(this.a);
+		this.ny = this.y + this.dy * this.s * Math.sin(this.a);
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'x') {
+			this.dx = -this.dx;
+		}
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'y') {
+			this.dy = -this.dy;
+		}
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'z') {
+			this.deletable = true;
+		}
+		for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) {
+			if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'left' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'right') {
+				this.dx = -this.dx;
+				bricks[currentLvl][q].lives -= 1;
+				if(sounding) sounds.brickDamaged.play();
+				break;
+			} else if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'bottom' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'top') {
+				this.dy = -this.dy;
+				bricks[currentLvl][q].lives -= 1;
+				if(sounding) sounds.brickDamaged.play();
+				break;
+			}
+		}
+		if(this.stickable && rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x - H / 4, y: player.y - H / 4, w: player.w + H / 4, h: H + H / 4})) {
+			this.sticky = true;
+			return;
+		}
+		if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'left' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'right') {
+			this.dx = -this.dx;
+			this.y -= H;
+			this.dy = -this.dy;
+			if(keys['right'] && this.dx < 0) {
+				this.a -= 0.4;
+			} else if(keys['right'] && this.dx > 0) {
+				this.a += 0.4;
+			}
+			if(keys['left'] && this.dx > 0) {
+				this.a += 0.4;
+			} else if(keys['left'] && this.dx < 0) {
+				this.a -= 0.4;
+			}
+		}
+		if(rectColl({x: this.x, y: this.y, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'bottom' || rectColl({x: this.x, y: this.y, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'top') {
+			this.dy = -this.dy;
+			if(keys['right'] && this.dx < 0) {
+				this.dx = -this.dx;
+				this.a -= 0.2;
+			} else if(keys['right'] && this.dx > 0) {
+				this.a += 0.2;
+			}
+			if(keys['left'] && this.dx > 0) {
+				this.dx = -this.dx;
+				this.a += 0.2;
+			} else if(keys['left'] && this.dx < 0) {
+				this.a -= 0.2;
+			}
+		}
+		this.nx = this.x + this.dx * this.s * Math.cos(this.a);
+		this.ny = this.y + this.dy * this.s * Math.sin(this.a);
+		this.x = this.nx;
+		this.y = this.ny;
+	}
+	if(this.sticky) {
+		if(keys['left']) {
+			this.dx = -1;
+			this.s = player.s;
+		}
+		if(keys['right']) {
+			this.dx = 1;
+			this.s = player.s;
+		}
+		if(!keys['right'] && !keys['left']) this.dx = this.s = 0;
+		this.nx = this.x + this.dx * this.s;
+		if(this.nx - H / 2 <= W || this.nx - H / 2 >= SW + W - H) return;
+		this.x = this.nx;
+	}
+	this.checkE();
+	this.checkZ(); //see, creating games is EZ = you just need to checkE() && checkZ(). (another !fun joke)
+	this.correctA();
+};
+Ball.prototype.checkE = function() { //check edges
+	if(this.x < 0 || this.y < 0 || this.x > width || this.y > height) {
+		this.deletable = true;
+	}
+};
+Ball.prototype.checkZ = function() { //some correction of ball position
+	if(wallColl(this.x - H / 4, this.y - H / 4, this.x + H / 4, this.y + H / 4, player.x, player.y, player.w, H) === 'z') {
+		this.y -= H;
+	}
+};
+Ball.prototype.correctA = function() { //correction of ball angle
+	if(Math.abs(rtd(this.a)) <= 10 || Math.abs(rtd(this.a)) >= 350 || (Math.abs(rtd(this.a)) > 170 && Math.abs(rtd(this.a)) < 190)) {
+		//console.log('corrected');
+		this.a = Math.random(0, 1) ? this.a + 0.2 : this.a - 0.2;
+		this.y -= H;
+	}
+};
+function Brick(x, y, type) { //brick class (oh, really?) (another !fun joke)
+	this.x = x;
+	this.y = y;
+	this.type = type;
+	this.lives = this.type === 'G' ? 6 : this.type === 'g' ? random(2, 5) : 1;
+	this.deletable = false;
+	this.c = this.defCP(this.type).c;
+	this.p = this.defCP(this.type).p;
+}
+Brick.prototype.defCP = function(t) {
+	var c = '#000000';
+	var p = 0;
+	switch(t) {
+		case 'g': c = colors[14]; p = 9; break;
+		case 'r': c = colors[15]; p = random(1, 8); break;
+		case 'y': c = colors[16]; p = random(1, 7); break;
+		case 'b': c = colors[17]; p = random(1, 6); break;
+		case 'p': c = colors[18]; p = random(1, 5); break;
+		case 'q': c = colors[19]; p = random(1, 4); break;
+		case 'w': c = colors[20]; p = random(1, 3); break;
+		case 'o': c = colors[21]; p = random(1, 2); break;
+		case 'c': c = colors[22]; p = 1; break;
+		case 'G': c = colors[23]; p = 10; break;
+		default: c = '#ffffff';
+	}
+	return {c: c, p: p};
+}
+Brick.prototype.checkL = function() {
+	if(this.lives <= 0) {
+		this.deletable = true;
+	}
+};
+Brick.prototype.draw = function() {
+	drawFR(this.x, this.y, W, H, this.c);
+	drawFR(this.x, this.y, W, H2, colors[34]);
+	if(this.lives > 1 && this.lives < 6) {
+		for(var q = 0; q < this.lives; q += 1) {
+			drawFR(this.x + W10 + W5 * q, this.y + H2, W10, H2 / 2, colors[15]);
+		}
+	}
+	if(this.lives > 1) {
+		drawFR(this.x + W10, this.y + H - W10, W - W10, W10, colors[0]);
+		drawFR(this.x + W - W10, this.y + W10, W10, H - W10, colors[0]);
+	}
+	drawSR(this.x, this.y, W, H, colors[0]);
+};
+function Capsule(x, y, t) { //game bonuses (prize capsules) class
+	this.x = x;
+	this.y = y;
+	this.t = t;
+	this.d = false;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.s = capsuleSpeed;
+	this.c = this.defC(this.t);
+}
+Capsule.prototype.defC = function(t) {
+	var c = '#FFFFFF';
+	switch(t) {
+		case 'E': c = colors[7]; break; //(E —— "expand") - increases the platform by 2 times
+		case 'D': c = colors[8]; break; //(D —— “divide”) - 2 more balls fly out of the ball
+		case 'L': c = colors[9]; break; //(L —— "laser") - sets a laser machines on the platform that can destroy bricks with a laser
+		case 'S': c = colors[10]; break; //(S —— "slow") - slows the ball
+		case 'B': c = colors[11]; break; //(B —— “breakthrough”) - creates a portal on the right (or left) side, a transition to the next level
+		case 'C': c = colors[12]; break; //(C —— “catch”) - the ball now sticks to the platform
+		case 'P': c = colors[13]; break; //(P —— “player”) - it adds an extra life
+	}
+	return c;
+};
+Capsule.prototype.draw = function() {
+	drawFR(this.x, this.y, W, H, this.c);
+	drawFR(this.x, this.y, W, H2 / 2, colors[34]);
+	drawFR(this.x + W10, this.y + H - W10, W - W10, W10, colors[6]);
+	drawFT(this.t, this.x + W2 - H / 2 + W10, this.y + H - W10, colors[1], H);
+};
+Capsule.prototype.move = function() {
+	this.ny = this.y + this.s;
+	if(sidesColl(this.nx, this.ny, this.nx + W, this.ny + H, player.x, player.y, player.x + player.w, player.y + H)) {
+		this.d = true;
+		switch(this.t) {
+			case 'E': changeState('expand'); break;
+			case 'D': changeState('divide'); break;
+			case 'L': changeState('laser'); break;
+			case 'S': changeState('slow'); break;
+			case 'B': changeState('breakthrough'); break;
+			case 'C': changeState('catch'); break;
+			case 'P': changeState('normal'); lives += 1; if(sounding) sounds.capsulePlayer.play(); break;
+		}
+	}
+	this.y = this.ny;
+};
+function Laser(x, y) { //class of lasers
+	this.x = x;
+	this.y = y;
+	this.s = laserSpeed;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.d = false;
+}
+Laser.prototype.draw = function() {
+	drawFR(this.x, this.y, W10, W5, colors[6]);
+};
+Laser.prototype.move = function() {
+	this.ny = this.y - this.s;
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) {
+		if(rectColl({x: this.x, y: this.y, w: W10, h: W5}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H})) {
+			this.d = true;
+			bricks[currentLvl][q].lives -= 1;
+		}
+	}
+	this.y = this.ny;
+};
+function Portal(x, y) { //the portal class is here
+	this.x = x;
+	this.y = y;
+	this.deletable = false;
+}
+Portal.prototype.draw = function() {
+	drawFR(this.x, this.y, H, H * 3, colors[29]);
+	drawFR(this.x + W10, this.y, W10, H * 3, colors[30]);
+	drawFR(this.x + H / 2 - W10 / 2, this.y, W10, H * 3, colors[30]);
+	drawFR(this.x + H - W10 * 2, this.y, W10, H * 3, colors[30]);
+};
+function changeState(state) { //this function is called, when any game state is changed
+	if(state === 'expand') {
+		if(sounding) sounds.capsuleExpand.play();
+		changeState('normal');
+		if(player.expandable) {
+			if(player.x <= SW / 2) {
+				player.setW(W * 4);
+				player.expandable = false;
+			} else {
+				player.setX(player.x - W * 2);
+				player.setW(W * 4);
+				player.expandable = false;
+			}
+		}
+	} else if(state === 'divide') {
+		if(sounding) sounds.capsuleDivide.play();
+		changeState('normal');
+		var x = balls[balls.length - 1].x;
+		var y = balls[balls.length - 1].y;
+		var a = balls[balls.length - 1].a;
+		var add = true;
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			if(balls[q].y > player.y + H || balls[q].sticky) {
+				add = false;
+				points += factor;
+			}
+		}
+		if(add) {
+			balls.push(new Ball(x, y, false));
+			balls.push(new Ball(x, y, false));
+		}
+		if(balls[balls.length - 1]) balls[balls.length - 1].a = a + 0.2;
+		if(balls[balls.length - 2]) balls[balls.length - 2].a = a - 0.2;
+	} else if(state === 'laser') {
+		if(sounding) sounds.capsuleLaser.play();
+		changeState('normal');
+		player.armed = true;
+	} else if(state === 'slow') {
+		if(sounding) sounds.capsuleSlow.play();
+		changeState('normal');
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			balls[q].setSpeed(ballSpeed / 2);
+		}
+		player.setSpeed(platformSpeed / 2);
+	} else if(state === 'breakthrough') {
+		if(sounding) sounds.capsuleBreakthrough.play();
+		changeState('normal');
+		if(!portals.length) {
+			var r = random(0, 1);
+			if(r) {
+				portals.push(new Portal(SW + W, SH - H * 2));
+			} else {
+				portals.push(new Portal(H, SH - H * 2));
+			}
+		}
+	} else if(state === 'catch') {
+		if(sounding) sounds.capsuleCatch.play();
+		changeState('normal');
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			balls[q].stickable = true;
+		}
+	} else if(state === 'normal') {
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			if(balls[q]) balls[q].setSpeed(ballSpeed);
+			if(balls[q]) balls[q].stickable = false;
+			if(balls[q]) balls[q].sticky = false;
+		}
+		player.setSpeed(platformSpeed);
+		player.armed = false;
+		player.setW(W * 2);
+		player.expandable = true;
+	}
+}
+function rectColl(a, b) { //collision detection function, that receives two objects a = {x: ax, y: ay, w: aw, h: ah} and b = {x: bx, y: by, w: bw, h: bh} and returns the side of collision
+	var side;
+	var dx = (a.x + a.w / 2) - (b.x + b.w / 2);
+	var dy = (a.y + a.h / 2) - (b.y + b.h / 2);
+	var halfSWidth = (a.w + b.w) / 2;
+	var halfSHeight = (a.h + b.h) / 2;
+	var width = halfSWidth * dy;
+	var height = halfSHeight * dx;
+	if(Math.abs(dx) <= halfSWidth && Math.abs(dy) <= halfSHeight) {
+		if(width > height) {
+			side = width > -height ? 'bottom' : 'left';
+		} else {
+			side = width > -height ? 'right' : 'top';
+		}
+	}
+	return side;
+}//rectColl end
+function wallColl(x1, y1, x2, y2, wx1, wy1, wx2, wy2) { //collision detection function, that receives four points, represented by top-left corner(x1, y1) and bottom-right corner(x2, y2) of object a, which inside of object b, with points of top-left corner(wx1, wy1) and bottom-right corner(wx2, wy2) (WUT?) (another !fun joke)
+	if(x1 <= wx1 || x2 >= wx2) return 'x';
+	if(y1 <= wy1/* || y2 >= wy2*/) return 'y';
+	if(y2 >= wy2) return 'z'; //why 'z'? because we create a 3D (4D) world (x, y, z, fourthDimension = imagination). (another !fun joke)
+}
+function sidesColl(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) { //collision detection function, that is same as previous, exception is those objects a and b are separate from each other
+	return (ax1 <= bx2 && ax2 >= bx1 && ay1 <= by2 && ay2 >= by1);
+}
+document.addEventListener('DOMContentLoaded', function() { //displaying our loader
+	if(!loading) {
+		document.querySelector('#loading').style.display = 'block';
+	} else {
+		loading.style.display = 'block';
+	}
+}, false);
+window.addEventListener('load', init, false); //when all things are loaded, initialize, then run
+//phew...it's done now. below you can find some styles for elements. thank you for your attension and have a nice time, see ya, stay code, sharp sharp <3
+/**/
+		/**/
+	</script>
+	<style>
+		/**/
+/**/
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+body * {
+	font-family: OldGameFatty;
+}
+#game {
+	display: block;
+}
+#strip {
+	display: flex;
+	color: #A5C942;
+	background-color: #A5C942;
+	align-items: center;
+	justify-content: center;
+}
+#controls {
+	display: flex;
+	background-color: #111203;
+}
+#controls div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #6D9D30;
+	border-left: 1px solid #A5C942;
+}
+#controls div:hover {
+	cursor: pointer;
+	background-color: #252908;
+	color: #A5C942;
+}
+#game-menu, #game-story, #game-controls, #game-options, #game-about, #game-over, #loading {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+}
+#game-menu {
+	z-index: 2;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 25, 0, 0.5), #252908), radial-gradient(#252908, #697E1E);
+	background-position: 0px 0px, 0px -50vh;
+	color: #A5C942;
+}
+#game-menu h1 {
+	text-decoration: underline;
+	letter-spacing: -2px;
+}
+#game-menu h1, #game-menu h2, .option {
+	color: #909F9C;
+}
+#menu-list {
+	list-style-type: none;
+	padding: 0;
+}
+#menu-list li {
+	padding: 10px;
+}
+#menu-list li span {
+	font-size: 1.5em;
+}
+#menu-list li:hover {
+	color: #6D9D30;
+	cursor: pointer;
+	text-shadow: -1px -1px #A5C942;
+}
+#game-story {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 25, 0.5), #000118), radial-gradient(#000118, #020AAF);
+	background-position: 0px 0px, 0px -50vh;
+	color: #DF9100;
+	font-size: 1.2em;
+	z-index: 3;
+}
+#game-controls {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #525152), radial-gradient(#525152, #BC6A02);
+	background-position: 0px 0px, 0px -50vh;
+	color: #DF9100;
+	font-size: 1.2em;
+	z-index: 4;
+}
+#game-options {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #740C07), radial-gradient(#740C07, #BC6A02);
+	background-position: 0px 0px, 0px -50vh;
+	color: #020773;
+	font-size: 1.2em;
+	z-index: 5;
+}
+
+#tilting-input, #sounding-input, .volume-radio, #tilting-input-min, #sounding-input-min {
+	display: none;
+}
+#tilting-label:hover, #sounding-label:hover, .volume-label, #tilting-label-min:hover, #sounding-label-min:hover, #opt {
+	cursor: pointer;
+}
+#tilting-label:before, #sounding-label:before, .volume-label:before, #tilting-label-min:before, #sounding-label-min:before {
+	display: inline-block;
+	background-color: #740C07;
+	content: "-";
+	border-radius: 5px;
+	width: 20px;
+	height: 20px;
+	margin-right: 20px;
+}
+.volume-label:before {
+	border-radius: 50%;
+}
+#tilting-input:checked ~ #tilting-label:before, #sounding-input:checked ~ #sounding-label:before, #tilting-input-min:checked ~ #tilting-label-min:before, #sounding-input-min:checked ~ #sounding-label-min:before {
+	background-color: #006100;
+	content: "+";
+}
+.volume-radio:checked + .volume-label:before {
+	background-color: #006100;
+	content: "+";
+}
+#game-about {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #525152), radial-gradient(#525152, #AFAFAF);
+	background-position: 0px 0px, 0px -50vh;
+	color: #A5C942;
+	font-size: 1.2em;
+	z-index: 6;
+}
+#game-over {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #D13056), radial-gradient(#D13056, #FE8CA7);
+	background-position: 0px 0px, 0px -50vh;
+	color: #111203;
+	font-size: 1.2em;
+	z-index: 7;
+}
+#loading {
+	display: none;
+	background-color: white;
+	color: #111203;
+	font-size: 1.2em;
+	z-index: 8;
+}
+.btn {
+	font-size: 1.2em;
+	background-image: linear-gradient(#BC6A02, #C2A50D);
+	background-position: 0px -15px;
+	color: #740C07;
+	border: 1px solid #909F9C;
+	border-radius: 5px;
+}
+.btn:hover {
+	cursor: pointer;
+	color: #121138;
+	border: 1px solid #C7D7C8;
+	background-image: linear-gradient(#C2A50D, #BC6A02);
+}
+.line-under {
+	background-image: radial-gradient(#252908 5%, rgba(37, 41, 8, 0.5) 15%, rgba(0, 0, 0, 0) 40%);
+}
+#game-options-min {
+	background-color: #252908;
+	color: #A5C942;
+	display: block;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 1;
+	border-radius: 5px;
+}
+#options-min-menu, #close {
+	display: none;
+	color: #A2BF90;
+}
+.text-min {
+	font-size: 0.8em;
+}
+/**/
+		/**/
+	</style>
+<!-- Hello, friends! -->
+<!-- First of all, sorry for my english skill. If you not afraid of it, continue. -->
+<!-- If you want to know, how to create a simple HTML5 game from scratch (without frameworks or libraries, just pure JavaScript), then welcome. -->
+<!-- In other case, run this code and have a nice play. -->
+<!-- It isn't a tutorial, but if you have some time, maybe you can read my code. -->
+<!-- I will be so happy, if you learn something from it, as well as you may teach me some cool stuff too, comment, if it's true. -->
+<!-- It far isn't a perfect game code, so, if you find some bugs or catch any errors, please, comment them. -->
+<!-- In case of any ideas or suggestions you have, how to improve this code, do not shy, comment. -->
+<!-- If you have any questions about this code, ask them in comments and I will explain to you any line of the code. -->
+<!-- What's where: -->
+<!-- All main code is in this (HTML) tab: HTML, JS and CSS. -->
+<!-- Important: -->
+<!-- CSS or JS tabs may cause your device freezing, so be careful. -->
+<!-- In CSS tab lye free font, encoded in base64 form. -->
+<!-- In JS tab sounds sources, encoded in base64 form can be found. -->
+<!-- Code structure (HTML tab): -->
+<!-- 0. head with some simple styles for loader. -->
+<!-- 1. HTML carcass. -->
+<!-- 2. JavaScript game code. -->
+<!-- 3. styles for page. -->
+<!-- There is alot of scrolling. -->
+<!-- Enjoy and thank you. <3 -->
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<!-- Hello, friends! -->
+<!-- First of all, sorry for my english skill. If you not afraid of it, continue. -->
+<!-- If you want to know, how to create a simple HTML5 game from scratch (without frameworks or libraries, just pure JavaScript), then welcome. -->
+<!-- In other case, run this code and have a nice play. -->
+<!-- It isn't a tutorial, but if you have some time, maybe you can read my code. -->
+<!-- I will be so happy, if you learn something from it, as well as you may teach me some cool stuff too, comment, if it's true. -->
+<!-- It far isn't a perfect game code, so, if you find some bugs or catch any errors, please, comment them. -->
+<!-- In case of any ideas or suggestions you have, how to improve this code, do not shy, comment. -->
+<!-- If you have any questions about this code, ask them in comments and I will explain to you any line of the code. -->
+<!-- What's where: -->
+<!-- All main code is in this (HTML) tab: HTML, JS and CSS. -->
+<!-- Important: -->
+<!-- CSS or JS tabs may cause your device freezing, so be careful. -->
+<!-- In CSS tab lye free font, encoded in base64 form. -->
+<!-- In JS tab sounds sources, encoded in base64 form can be found. -->
+<!-- Code structure (HTML tab): -->
+<!-- 0. head with some simple styles for loader. -->
+<!-- 1. HTML carcass. -->
+<!-- 2. JavaScript game code. -->
+<!-- 3. styles for page. -->
+<!-- There is alot of scrolling. -->
+<!-- Enjoy and thank you. <3 -->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>ARKAN||ID</title>
+	<style>
+		.centered {
+			text-align: center;
+			font-family: monospace;
+			font-size: 1.2em;
+		}
+
+		.loader {
+			-webkit-animation: rotation 2s infinite linear;
+			-moz-animation: rotation 2s infinite linear;
+			-o-animation: rotation 2s infinite linear;
+			-ms-animation: rotation 2s infinite linear;
+			animation: rotation 2s infinite linear;
+			display: block;
+			margin: 0 auto;
+		}
+
+		@-webkit-keyframes rotation {
+			0% {
+				-webkit-transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(360deg);
+			}
+		}
+
+		@-moz-keyframes rotation {
+			0% {
+				-moz-transform: rotate(0deg);
+			}
+			100% {
+				-moz-transform: rotate(360deg);
+			}
+		}
+
+		@-o-keyframes rotation {
+			0% {
+				-o-transform: rotate(0deg);
+			}
+			100% {
+				-o-transform: rotate(360deg);
+			}
+		}
+
+		@-ms-keyframes rotation {
+			0% {
+				-ms-transform: rotate(0deg);
+			}
+			100% {
+				-ms-transform: rotate(360deg);
+			}
+		}
+
+		@keyframes rotation {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		} 
+	</style>
+	<!-- external resources -->
+	<link rel="stylesheet" href="ARKANorID/style.css">
+	<script src="ARKANorID/script.js"></script>
+	<!-- external resources end -->
+</head>
+<body>
+	<div id="loading">
+		<span class="centered">Loading...</span>
+		<svg class="loader" width="64" height="64">
+			<circle cx="32" cy="16" r="16" fill="red" />
+			<circle cx="46" cy="40" r="16" fill="green" />
+			<circle cx="18" cy="40" r="16" fill="blue" />
+			<circle cx="32" cy="32" r="16" fill="white" />
+		</svg> 
+	</div>
+	<canvas id="game"></canvas>
+	<div id="strip">---</div>
+	<div id="controls">
+		<div id="left">◄</div>
+		<div id="fire">▲</div>
+		<div id="right">►</div>
+	</div>
+	<div id="game-menu">
+		<h1>ARKAN||ID</h1>
+		<h2>game</h2>
+		<ul id="menu-list">
+			<li class="line-under"><span id="play-btn">►PLAY</span></li>
+			<li class="line-under"><span id="controls-btn">CONTROLS</span></li>
+			<li class="line-under"><span id="options-btn">OPTIONS</span></li>
+			<li class="line-under"><span id="about-btn">ABOUT</span></li>
+		</ul>
+	</div>
+	<div id="game-story">
+		<span><br><br>
+			THE ERA AND TIME OF<br>
+			THIS STORY IS UNKNOWN.<br>
+			<br>
+			AFTER THE NOSTALGIA FOR<br>
+			RETRO-GAMES AROSE,<br>
+			AMAZING APP "SOLOLEARN"<br>
+			WAS OPENED, AND "K137"<br>
+			BEGAN TO CODE THIS GAME.<br>
+			<br>
+			NOT JUST FOR SELF-STUDY,<br>
+			BUT ALSO TO ALLOW SOMEONE<br>
+			TO LEARN AND PLAY TOO......
+		</span><br><br>
+		<div class="line-under"><button id="start-btn" class="btn">KUDOS</button></div>
+	</div>
+	<div id="game-controls">
+		<span><br><br>
+			You can move the platform to the left by pressing ◄ button below || by pushing ◄ button on your keyboard || by tilting your device in this ◄ way (you must first enable it in the options).<br><br>
+			Also you can move the platform to the right by pressing ► button below || by pushing ► button on your keyboard || by tilting your device in this ► way (you must first enable it in the options).<br><br>
+			You can even cast the ball || shoot the laser by pressing ▲ button below || by pushing ▲ button on your keyboard.
+		</span><br><br>
+		<div class="line-under"><button class="back-btn btn">◄BACK</button></div>
+	</div>
+	<div id="game-options">
+		<span class="line-under"><br><br>
+			Tilt settings:
+		</span><br><br>
+		<form id="options-form">
+			<input type="checkbox" id="tilting-input" name="tilting" value="false">
+			<label for="tilting-input" id="tilting-label" class="option">Enable tilting the device?</label>
+			<br>(FYI: While it is on, you cannot use ◄ or ► buttons)
+			<span class="line-under"><br><br>
+				Sound settings:
+			</span><br><br>
+			<input type="checkbox" id="sounding-input" name="sounding" value="false">
+			<label for="sounding-input" id="sounding-label" class="option">Enable the game sounds?</label>
+			<span class="line-under"><br><br>
+				Volume settings:
+			</span><br><br>
+			<input type="radio" name="volume" data-value="0.2" id="volume-02" class="volume-radio">
+			<label for="volume-02" class="volume-label option">volume: ■■□□□□□□□□ (0.2)</label><br>
+			<input type="radio" name="volume" data-value="0.5" id="volume-05" class="volume-radio" checked>
+			<label for="volume-05" class="volume-label option">volume: ■■■■■□□□□□ (0.5)</label><br>
+			<input type="radio" name="volume" data-value="0.7" id="volume-07" class="volume-radio">
+			<label for="volume-07" class="volume-label option">volume: ■■■■■■■□□□ (0.7)</label><br>
+			<input type="radio" name="volume" data-value="1.0" id="volume-10" class="volume-radio">
+			<label for="volume-10" class="volume-label option">volume: ■■■■■■■■■■ (1.0)</label>
+		</form><br><br>
+		<div class="line-under"><button class="back-btn btn" id="sound-check">◄BACK</button></div>
+	</div>
+	<div id="game-about">
+		<span><br><br>
+			Author:<br>
+			Game created by K137 2019<br>
+			Original game:<br>
+			Arkanoid by Taito 1986<br>
+			Font source:<br>
+			<a href="https://www.1001freefonts.com/old-game-fatty.font">
+				https://www.1001freefonts.com/old-game-fatty.font
+			</a><br>
+			Sounds source:<br>
+			Bfxr sound program<br>
+			<a href="https://www.bfxr.net/">
+				https://www.bfxr.net/
+			</a><br>
+			Platform:<br>
+			SoloLearn app<br>
+			<a href="https://www.sololearn.com/">
+				https://www.sololearn.com/
+			</a>
+		</span><br><br>
+		<div class="line-under"><button class="back-btn btn">◄BACK</button></div>
+	</div>
+	<div id="game-over">
+		<span class="line-under"><br><br>
+			GAME OVER
+		</span><br><br>
+		<div class="line-under"><button class="btn" id="restart" onclick="reinit();">◄MENU</button></div>
+	</div>
+	<div id="game-options-min">
+		<span id="opt">☼<span id="close">close</span></span>
+		<div id="options-min-menu">
+			<input type="checkbox" id="tilting-input-min" name="tilting-min" value="false">
+			<label for="tilting-input-min" id="tilting-label-min">↔</label><br>
+			<input type="checkbox" id="sounding-input-min" name="sounding-min" value="false">
+			<label for="sounding-input-min" id="sounding-label-min">♫</label>
+		</div>
+	</div>
+	<script>
+		/**/
+/**/
+'use strict';
+var game, canvas, CW, CH, context, cols, width, height, W, H, W2, W5, W10, H2, SW, SH, test, highPts, points, score, highScore, lives, level, colors, bgGradient, maps, keys, strip, controls, player, platformSpeed, balls, ballSpeed, capsuleSpeed, laserSpeed, bricks, m, gameMenu, tilting, tiltingInput, sounding, soundingInput, factor, auto, currentLvl, currentBg, bg0, bg1, bg2, bg3, sounds, volume, form, vols, playBtn, controlsBtn, optionsBtn, aboutBtn, backBtns, gameMenu, gameStory, gameControls, gameOptions, gameAbout, gameOver, startBtn, limit, capsules, lasers, portals, opt, optM, close, tiltingMin, soundingMin, soundCheck, loading, restart, inner;
+function dtr(a) { //degrees to radians convertor
+	return a * Math.PI / 180;
+}
+function rtd(a) { //radians to degrees transformation function
+	return a * 180 / Math.PI;
+}
+function random(min, max) { //this function returns random integer from given range
+	return Math.floor(Math.random() * (1 + max - min) + min);
+}
+function drawFR(x, y, w, h, c, ctx) { //a filled rectangle primitive
+	if(ctx) {
+		ctx.fillStyle = c;
+		ctx.fillRect(x, y, w, h);
+	} else {
+		context.fillStyle = c;
+		context.fillRect(x, y, w, h);
+	}
+}
+function drawSR(x, y, w, h, c, ctx) { //stroke rect object
+	if(ctx) {
+		ctx.strokeStyle = c;
+		ctx.strokeRect(x, y, w, h);
+	} else {
+		context.strokeStyle = c;
+		context.strokeRect(x, y, w, h);
+	}
+}
+function drawFC(x, y, r, c, ctx) { //drawing filled circular shape
+	if(ctx) {
+		ctx.fillStyle = c;
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2, false);
+		ctx.closePath();
+		ctx.fill();
+	} else {
+		context.fillStyle = c;
+		context.beginPath();
+		context.arc(x, y, r, 0, Math.PI * 2, false);
+		context.closePath();
+		context.fill();
+	}
+}
+function drawSC(x, y, r, c, ctx) { //function for stroke arc
+	if(ctx) {
+		ctx.strokeStyle = c;
+		ctx.beginPath();
+		ctx.arc(x, y, r, 0, Math.PI * 2, false);
+		ctx.closePath();
+		ctx.stroke();
+	} else {
+		context.strokeStyle = c;
+		context.beginPath();
+		context.arc(x, y, r, 0, Math.PI * 2, false);
+		context.closePath();
+		context.stroke();
+	}
+}
+function drawFT(t, x, y, c, s) { //filled text drawing function
+	context.fillStyle = c;
+	context.font = s + 'px OldGameFatty';
+	context.fillText(t, x, y);
+}
+function drawST(t, x, y, c, s) { //draw stroke text
+	context.strokeStyle = c;
+	context.font = s + 'px OldGameFatty';
+	context.strokeText(t, x, y);
+}
+function clear() { //function for cleaning (out of sight && out of mind) (!fun joke)
+	context.clearRect(0, 0, width, height);
+}
+function drawBackground() { //paint our background with gradient
+	drawFR(0, 0, width, height, bgGradient);
+}
+function drawBorder() { //game border draw function (place, where game exists)
+	for(var x = 0; x < W * (cols + 1); x += W) {
+		drawFR(H + x, H, W, H, colors[2]);
+	}
+	for(var y = 0; y < height; y += W) {
+		if(y <= W * 4) drawFR(H, H + y, H, W, colors[2]);
+		if(y >= W * 4 && y < W * 8) drawFR(H, H + y, H, W, colors[3]);
+		if(y >= W * 8 && y < W * (cols + 1)) drawFR(H, H + y, H, W, colors[4]);
+		if(y >= W * (cols + 1)) drawFR(H, H + y, H, W, colors[5]);
+	}
+	for(var y = 0; y < height; y += W) {
+		if(y <= W * 4) drawFR(W * (cols + 1), H + y, H, W, colors[2]);
+		if(y >= W * 4 && y < W * 8) drawFR(W * (cols + 1), H + y, H, W, colors[3]);
+		if(y >= W * 8 && y < W * (cols + 1)) drawFR(W * (cols + 1), H + y, H, W, colors[4]);
+		if(y >= W * (cols + 1)) drawFR(W * (cols + 1), H + y, H, W, colors[5]);
+	}
+}//drawBorder end
+function drawInfo() { //here we draw all information such as score and player lives counter
+	drawFT('HI', W * (cols + 1) + H + H / 2, W * 2 + H, colors[2], H);
+	drawFT('PTS:', W * (cols + 1) + H + H / 2, W * 2 + H * 2, colors[2], H);
+	drawFT(highPts, W * (cols + 1) + H + H / 2, W * 2 + H * 3 + H, colors[2], H);
+	drawFT('PTS:', W * (cols + 1) + H + H / 2, W * 2 + H * 4 + H * 2, colors[3], H);
+	drawFT(points, W * (cols + 1) + H + H / 2, W * 2 + H * 5 + H * 3, colors[3], H);
+	drawFT('HP:', W * (cols + 1) + H + H / 2, W * 2 + H * 6 + H * 4, colors[4], H);
+	drawFT(lives, W * (cols + 1) + H + H / 2, W * 2 + H * 7 + H * 5, colors[4], H);
+	drawFT('LVL:', W * (cols + 1) + H + H / 2, W * 2 + H * 8 + H * 6, colors[5], H);
+	drawFT(level, W * (cols + 1) + H + H / 2, W * 2 + H * 9 + H * 7, colors[5], H);
+}//drawInfo end
+function createBgImages() {//function, which draw many simple objects onto a canvas, snapshot its data, and then create a background image
+	var canvas = document.createElement('canvas');
+	canvas.width = SW;
+	canvas.height = SH;
+	var context = canvas.getContext('2d');
+	//0
+	drawFR(0, 0, width, height, colors[24], context);
+	for(var y = 0; y <= height; y += W) {
+		for(var x = 0; x <= width; x += W) {
+			if(x % 2 === 0) {
+				drawFR(x, y, W, H, colors[24], context);
+				drawFR(x, y + H, W, H, colors[25], context);
+				drawFR(x + H / 2, y + H / 2, W, H, colors[25], context);
+				drawFR(x + H / 2, y + H + H / 2, W, H, colors[24], context);
+			} else {
+				drawFR(x, y, W, H, colors[25], context);
+				drawFR(x, y + H, W, H, colors[24], context);
+				drawFR(x + H / 2, y + H / 2, W, H, colors[24], context);
+				drawFR(x + H / 2, y + H + H / 2, W, H, colors[25], context);
+			}
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg0 = document.createElement('img');
+	bg0.width = width;
+	bg0.height = height;
+	bg0.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//1
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[26], context);
+			drawFR(x + W / 2 - H / 4, y + W - H + H / 2, H / 2, H / 4, colors[27], context);
+			drawFC(x + W / 2, y + W / 2, H / 2, colors[27], context);
+			drawFC(x + W / 2, y, H, colors[27], context);
+			drawFC(x + W / 2 - W / 5, y + H / 3, H / 4, colors[26], context);
+			drawFC(x + W / 2 + W / 5, y + H / 3, H / 4, colors[26], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg1 = document.createElement('img');
+	bg1.width = width;
+	bg1.height = height;
+	bg1.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//2
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[28], context);
+			drawFR(x + W / 5, y + W / 5, W, W, colors[29], context);
+			drawFR(x + W / 4, y + W / 4, W, W, colors[28], context);
+			drawFC(x + W / 2, y + H / 2 - W / 5, H / 2, colors[29], context);
+			drawSC(x + W / 2, y + H / 2 + W / 5, H / 4, colors[29], context);
+			drawFR(x + W - W / 5, y + H / 2, W / 2, W / 2, colors[29], context);
+			drawFR(x + W - W / 2, y + H / 2 + H / 3, W / 2, W / 2, colors[28], context);
+			drawFR(x + H / 3, y + H / 2 + H / 3 - W / 5 + H, W / 2, W / 2, colors[29], context);
+			drawFR(x + H / 3 - H / 5, y + H / 2 + H / 3 - W / 5 - H / 5 + H, W / 2, W / 2, colors[28], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg2 = document.createElement('img');
+	bg2.width = width;
+	bg2.height = height;
+	bg2.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+	//3
+	for(var y = 0; y <= height; y += W * 2) {
+		for(var x = 0; x <= width; x += W) {
+			drawFR(x, y, W, W * 2, colors[30], context);
+			drawFR(x + W / 2, y + W, H / 2, H, colors[31], context);
+			drawFR(x + W / 4, y + W, H / 3, H / 3, colors[31], context);
+			drawSR(x + W / 2, y + W / 2, H / 2, H, colors[31], context);
+			drawSR(x + W / 3, y + W + H / 3, H, H * 2, colors[31], context);
+			drawFR(x + W / 4, y + W, H / 2, H * 2 - H / 3, colors[31], context);
+			drawFR(x, y + W + W / 2, H / 2, H, colors[31], context);
+			drawFR(x + W / 4, y, H / 3, H / 3, colors[31], context);
+		}
+	}
+	drawFR(0, 0, width, height, colors[34], context);
+	bg3 = document.createElement('img');
+	bg3.width = width;
+	bg3.height = height;
+	bg3.src = canvas.toDataURL('image/jpeg', 1.0);
+	context.clearRect(0, 0, width, height);
+}//createBgImages end
+function drawLvlBg(idx) { //function for drawing represented image
+	if(idx === 0) {
+		context.drawImage(bg0, W, W, SW, SH);
+	} else if(idx === 1) {
+		context.drawImage(bg1, W, W, SW, SH);
+	} else if(idx === 2) {
+		context.drawImage(bg2, W, W, SW, SH);
+	} else {
+		context.drawImage(bg3, W, W, SW, SH);
+	}
+}
+function switchLvlBg() { //it's a switcher for current background
+	if(currentBg >= 4) currentBg = 0;
+	switch(currentBg) {
+		case 0: drawLvlBg(0); break;
+		case 1: drawLvlBg(1); break;
+		case 2: drawLvlBg(2); break;
+		case 3: drawLvlBg(3); break;
+	}
+}
+function Sound(src, vol) { //class for game sounds
+	this.src = src;
+	this.vol = vol; //initial volume
+	this.elem = document.createElement('audio');
+	this.elem.volume = this.vol;
+	for(var q = 0; q < src.length; q += 1) {
+		var source = document.createElement('source');
+		source.src = src[q];
+		this.elem.appendChild(source);
+	}
+	document.body.appendChild(this.elem);
+}
+Sound.prototype.setVolume = function(volume) {
+	this.elem.volume = volume;
+};
+Sound.prototype.play = function() {
+	this.elem.currentTime = 0;
+	this.elem.play();
+};
+Sound.prototype.playLoop = function() {
+	this.elem.loop = true;
+	this.elem.play();
+};
+Sound.prototype.toggleLoop = function() {
+	this.elem.loop = !this.elem.loop;
+};
+Sound.prototype.stop = function() {
+	this.elem.pause();
+	this.elem.currentTime = 0;
+};
+Sound.prototype.pause = function() {
+	this.elem.pause();
+};
+function createSounds() { //this is process of filling our sounds array with Sound objects
+	for(var s in soundSrc) {
+		sounds[s] = new Sound([soundSrc[s][0], soundSrc[s][1], soundSrc[s][2]], volume);
+	}
+}
+function setVol() { //as the name implies, this function is for setting volume
+	for(var q = 0; q < vols.length; q += 1) {
+		if(vols[q].checked) {
+			volume = Number(vols[q].dataset.value);
+		}
+	}
+	for(var s in sounds) {
+		sounds[s].setVolume(volume);
+	}
+	playBtnSnd();
+}//setVol end
+function showAndHide(show, hide) { //here we show one DOM element (or none) and hide other element(s)
+	if(show) show.style.display = 'block';
+	if(hide.length) {
+		for(var q = 0; q < hide.length; q += 1) {
+			hide[q].style.display = 'none';
+		}
+	} else {
+		hide.style.display = 'none';
+	}
+}//showAndHide end
+function calcProbability(threshold) { //this function determines, what chance of drop a game bonus
+	var rnd = random(0, threshold);
+	var leftChanceRng = Math.floor(threshold / 2) - Math.floor(threshold / 20);
+	var rightChanceRng = Math.floor(threshold / 2) + Math.floor(threshold / 20);
+	if(rnd >= leftChanceRng && rnd <= rightChanceRng) return true;
+	return false;
+}//calcProbability end
+function levels() {//main function, inside it, all the game stuff (drawing, collision detection and other conditions) really try to be executed 60 times per second. (does this work for them is a completely different question) (another !fun joke)
+	clear(); //clear previous frame
+	drawBackground(); //yeah, draw it
+	switchLvlBg(); //which of the backgrounds is currently drawn
+	highPts = highPts > points ? highPts : points; //update hi points
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) { //for all game bricks
+		bricks[currentLvl][q].draw(); //draw them
+		bricks[currentLvl][q].checkL(); //check they lives
+	}
+	drawBorder(); //game edges here is drawn
+	drawInfo(); //drawing game score, amount of player lives and current level number
+	player.move(); //make the player move (a little shaking does not hurt, come on, do not sit) (another !fun joke)
+	player.draw(); //draw the player (platform)
+	for(var q = balls.length - 1; q >= 0; q -= 1) { //for all game balls
+		if(balls[q]) balls[q].move(); //if it's exist, move it
+		if(balls[q]) balls[q].draw(); //and if it's exist, draw it
+	}
+	if(keys['fire'] && balls[balls.length - 1]) { //launching the ball in free flight
+		if(balls[balls.length - 1].sticky) {
+			balls[balls.length - 1].y -= H;
+			balls[balls.length - 1].dx = balls[balls.length - 1].dx ? balls[balls.length - 1].dx : 1;
+			balls[balls.length - 1].dy = balls[balls.length - 1].dy ? -balls[balls.length - 1].dy : -1;
+			balls[balls.length - 1].s = ballSpeed;
+		}
+		balls[balls.length - 1].sticky = false;
+	}
+	for(var q = balls.length - 1; q >= 0; q -= 1) { //checking, if any of balls reach bottom edge of the game
+		if(balls[q] && balls[q].deletable) {
+			balls.splice(q, 1);
+			if(sounding) sounds.ballFlyaway.play();
+			if(balls.length === 0) {
+				lives -= 1;
+				changeState('normal');
+			}
+			if(lives > 0 && balls.length === 0) { //add new Ball object, if it's possible
+				balls.push(new Ball(player.x + player.w / 2, player.y - H / 2, true));
+				for(var q = portals.length - 1; q >= 0; q -= 1) {
+					portals[q].deletable = true;
+				}
+			}
+		}
+	}
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) { //here we determine, what will happen, when game brick is destroyed (breaking = !building) (another !fun joke)
+		if(bricks[currentLvl][q].deletable) {
+			var x = bricks[currentLvl][q].x;
+			var y = bricks[currentLvl][q].y;
+			points += bricks[currentLvl].splice(q, 1)[0].p;
+			if(sounding) sounds.brickDestroyed.play();
+			if(calcProbability(limit)) {
+				var rnd = random(0, 6);
+				switch(rnd) { //adding new Capsule game object
+					case 0: capsules.push(new Capsule(x, y, 'E')); break; //what is E, D, L... (see Capsule class below)
+					case 1: capsules.push(new Capsule(x, y, 'D')); break;
+					case 2: capsules.push(new Capsule(x, y, 'L')); break;
+					case 3: capsules.push(new Capsule(x, y, 'S')); break;
+					case 4: capsules.push(new Capsule(x, y, 'B')); break;
+					case 5: capsules.push(new Capsule(x, y, 'C')); break;
+					case 6: capsules.push(new Capsule(x, y, 'P')); break;
+				}
+			}
+		}
+	}
+	if(auto && player && balls[balls.length - 1]) { //don't touch this, at least if you're not cheater (another !fun joke) (when cheats mode on, it's useful for testing)
+		player.x = balls[balls.length - 1].x - player.w / 2;
+	}
+	if(bricks[currentLvl].length === 0) { //ok, it seems, player completed current level
+		if(sounding) sounds.newLvl.play();
+		changeState('normal');
+		currentBg += 1;
+		currentLvl += 1;
+		level = currentLvl + 1;
+		player.x = SW / 2;
+		balls.length = 1;
+		capsules.length = 0;
+		lasers.length = 0;
+		if(balls[balls.length - 1]) {
+			balls[balls.length - 1].x = player.x + player.w / 2;
+			balls[balls.length - 1].y = player.y - H / 2;
+			balls[balls.length - 1].sticky = true;
+			balls[balls.length - 1].a = dtr(45);
+		}
+		for(var q = portals.length - 1; q >= 0; q -= 1) {
+			portals[q].deletable = true;
+		}
+	}
+	for(var q = capsules.length - 1; q >= 0; q -= 1) { //if game bonus (capsule) tries to delete itself from array, let it be
+		if(capsules[q].d) capsules.splice(q, 1);
+	}
+	for(var q = capsules.length - 1; q >= 0; q -= 1) { //moving and drawing game bonuses, also determination Y position of them
+		capsules[q].move();
+		capsules[q].draw();
+		if(capsules[q].y >= height) capsules[q].d = true;
+	}
+	for(var q = lasers.length - 1; q >= 0; q -= 1) { //remove laser from its array, if it's needed
+		if(lasers[q].d) {
+			lasers.splice(q, 1);
+		}
+	}
+	for(var q = lasers.length - 1; q >= 0; q -= 1) { //pew-pew (what game without shooting) (another !fun joke)
+		lasers[q].move();
+		lasers[q].draw();
+		if(lasers[q].y <= W) lasers[q].d = true;
+	}
+	for(var q = portals.length - 1; q >= 0; q -= 1) { //delete the portal, if it's time
+		if(portals[q].deletable) {
+			portals.splice(q, 1);
+		}
+	}
+	for(var q = portals.length - 1; q >= 0; q -= 1) { //game portal is drawn here
+		portals[q].draw();
+	}
+	if(lives <= 0 || currentLvl === 33) { //checking of "game over" state
+		setGameover();
+	}
+	if(sounding && gameMenu.clientHeight) { //playing menu theme
+		sounds.menu.playLoop();
+	} else if(sounding && !gameMenu.clientHeight) {
+		sounds.menu.stop();
+	}
+}//levels end
+function setGameover() { //any game can over
+	var receivedLives = lives;
+	var receivedLvl = currentLvl;
+	lives = 3;
+	currentLvl = 0;
+	score = points * factor;
+	highScore = highScore > score ? highScore : score;
+	inner = '';
+	inner += '<span class="line-under"><br><br>GAME OVER</span><br><br>';
+	inner += '<div class="line-under"><button class="btn" id="restart" onclick="reinit();">◄MENU</button></div>';
+	if(receivedLvl === 33 && receivedLives > 0) {
+		inner += '<span class="line-under"><br>CONGRATULATIONS !!!</span><br>';
+		inner += '<span class="centered text-min">DIMENSION-CONTROLLING FORT "D||H",</span><br>';
+		inner += '<span class="centered text-min">WHICH CAPTURED THE "SL LOGO", HAS</span><br>';
+		inner += '<span class="centered text-min">NOW BEEN DEMOLISHED, "SL LOGO"</span><br>';
+		inner += '<span class="centered text-min">RELEASED AND MANAGED TO ESCAPE</span><br>';
+		inner += '<span class="centered text-min">FROM DISTORTED SPACE. KNOWLEDGE,</span><br>';
+		inner += '<span class="centered text-min">RECEIVED WHILE MAKING "ARKAN||ID"</span><br>';
+		inner += '<span class="centered text-min">GAME, WAS VERY USEFUL, BUT THE</span><br>';
+		inner += '<span class="centered text-min">REAL CODE-VOYAGE OF "K137" HAS</span><br>';
+		inner += '<span class="centered text-min">ONLY STARTED......I HOPE, YOU</span><br>';
+		inner += '<span class="centered text-min">ENJOYED THIS JOURNEY SAME, AS ME.</span><br>';
+		inner += '<span class="centered text-min">THANKS FOR PLAYING AND LEARNING.</span><br>';
+	} else if(receivedLives <= 0) {
+		inner += '<span class="centered">Reason: Not enough HP.</span><br>';
+		inner += '<span class="centered">Solution: Please, try again.</span><br>';
+	}
+	inner += '<span class="line-under"><br>Your score:</span><br>';
+	inner += '<span class="centered">' + score + '<br></span><br>';
+	inner += '<span class="line-under">High score:</span><br>';
+	inner += '<span class="centered">' + highScore + '<br></span><br>';
+	gameOver.innerHTML = inner;
+	gameOver.style.display = 'block';
+}//setGameover end
+function startGame() { //function, that starts main game cycle
+	loop();
+}
+function setGame(fun) { //here we can set any function to execute. In our case it is "levels" function
+	game = fun; //Yup, game is fun (another !fun joke)
+}
+function loop() { //main game cycle function
+	game();
+	requestAnimationFrame(loop);
+}
+function down(e) { //event handler for mousedown, touchstart and keydown events
+	if(e) e.preventDefault();
+	if(tilting) {
+		if(e.keyCode && e.keyCode === 38) {
+			keys.fire = true;
+			return;
+		}
+	}
+	if(e.keyCode && !tilting) {
+		switch(e.keyCode) {
+			case 37: keys.left = true; break;
+			case 38: keys.fire = true; break;
+			case 39: keys.right = true; break;
+		}
+		return;
+	}
+	if(tilting) {
+		if(e.target.id === 'fire') {
+			keys.fire = true;
+			e.target.style.backgroundColor = colors[3];
+		}
+	}
+	if(!tilting) {
+		switch(e.target.id) {
+			case 'left': keys.left = true; break;
+			case 'fire': keys.fire = true; break;
+			case 'right': keys.right = true; break;
+		}
+		e.target.style.backgroundColor = colors[3];
+	}
+}//down end
+function addLaser(code, id) { //function, that adds new Laser object randomly
+	if((code === 38 || id === 'fire') && player.armed) {
+		var r = random(0, 1);
+		if(r) {
+			lasers.push(new Laser(player.x + player.w / 4 - W10 / 2, player.y - W10));
+			if(sounding) sounds.laserShoot.play();
+		} else {
+			lasers.push(new Laser(player.x + player.w - player.w / 4 - W10 / 2, player.y - W10));
+			if(sounding) sounds.laserShoot.play();
+		}
+	}
+}//addLaser end
+function up(e) { //event handler for mouseup, touchend and keyup events
+	if(e) e.preventDefault();
+	if(tilting) {
+		if(e.keyCode && e.keyCode === 38) {
+			keys.fire = false;
+			addLaser(e.keyCode, false);
+			return;
+		}
+	}
+	if(e.keyCode && !tilting) {
+		switch(e.keyCode) {
+			case 37: keys.left = false; break;
+			case 38: keys.fire = false; break;
+			case 39: keys.right = false; break;
+		}
+		addLaser(e.keyCode, false);
+		return;
+	}
+	if(tilting) {
+		if(e.target.id === 'fire') {
+			keys.fire = false;
+			e.target.style.backgroundColor = '';
+			addLaser(false, e.target.id);
+		}
+	}
+	if(!tilting) {
+		switch(e.target.id) {
+			case 'left': keys.left = false; break;
+			case 'fire': keys.fire = false; break;
+			case 'right': keys.right = false; break;
+		}
+		e.target.style.backgroundColor = '';
+		addLaser(false, e.target.id);
+	}
+}//up end
+function playBtnSnd() { //just a little sound for the buttons
+	if(sounding) sounds.menuBtn.play();
+}
+function init() { //in this huge function, all the global variables will be defined, also event listeners will be attached
+	canvas = document.querySelector('#game');
+	CW = Math.floor(window.innerWidth / 3) - 1;
+	CH = Math.floor(window.innerHeight / 4);
+	width = canvas.width = window.innerWidth;
+	height = canvas.height = window.innerHeight - CH;
+	context = canvas.getContext('2d');
+	cols = 13;
+	W = height > width ? Math.floor(width / 16) : Math.floor(height / 16);
+	H = Math.floor(W / 2);
+	SW = W * cols;
+	SH = height - W;
+	W2 = H;
+	W5 = Math.floor(W / 5);
+	W10 = Math.floor(W / 10);
+	H2 = Math.floor(H / 2);
+	//test = 0;
+	highPts = 0;
+	points = 0;
+	score = 0;
+	highScore = 0;
+	lives = 3;
+	level = 1;
+	colors = [
+		'#111203',//0
+		'#252908',//=1
+		'#697E1E',//2
+		'#6D9D30',//3//#80A92F
+		'#80A92F',//4//#6D9D30
+		'#A5C942',//'#A5D942',//5
+		'#A2BF90',//6
+		'#2647A6',//7E-expand//prize capsules
+		'#6F9EDD',//8D-divide
+		'#D13056',//9L-laser
+		'#FE8CA7',//10S-slow
+		'#D141EB',//'#E756DE',//11B-breakthrough
+		'#68E350',//12C-catch
+		'#AFAFAF',//13P-player
+		'#909F9C',//g0-gray2-5//blocks//14
+		'#CF1906',//r1-red1//15
+		'#CFC103',//y2-yellow//16
+		'#006DAF',//b3-blue//17
+		'#DF7DA3',//p4-pink//18
+		'#00D803',//q5-green//19
+		'#C7D7C8',//w6-white//20
+		'#DF9100',//o7-orange//21
+		'#01E3AF',//c8-cyan//22
+		'#C2A50D',//G9-gold6//23
+		'#020AAF',//1//24
+		'#020773',//1//25
+		'#008003',//2//26
+		'#006100',//2//27
+		'#023183',//3//28
+		'#121138',//3//29
+		'#A1352C',//4//30
+		'#525152',//31
+		'#BC6A02',//32
+		'#740C07',//33
+		'rgba(128, 128, 128, 0.5)'//34
+	];
+	bgGradient = context.createLinearGradient(0, 0, 0, height);
+	bgGradient.addColorStop(0, colors[1]);
+	bgGradient.addColorStop(1, colors[0]);
+	maps = [ //design of all levels was taken from the original game
+		[//0
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ggggggggggggg',
+			'rrrrrrrrrrrrr',
+			'yyyyyyyyyyyyy',
+			'bbbbbbbbbbbbb',
+			'ppppppppppppp',
+			'qqqqqqqqqqqqq'
+		],
+		[//1
+			'=============',
+			'=============',
+			'w============',
+			'wo===========',
+			'woc==========',
+			'wocq=========',
+			'wocqr========',
+			'wocqrb=======',
+			'wocqrbp======',
+			'wocqrbpy=====',
+			'wocqrbpyw====',
+			'wocqrbpywo===',
+			'wocqrbpywoc==',
+			'wocqrbpywocq=',
+			'ggggggggggggr'
+		],
+		[//2
+			'=============',
+			'=============',
+			'=============',
+			'qqqqqqqqqqqqq',
+			'=============',
+			'wwwGGGGGGGGGG',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'=============',
+			'GGGGGGGGGGwww',
+			'=============',
+			'ppppppppppppp',
+			'=============',
+			'bbbGGGGGGGGGG',
+			'=============',
+			'ccccccccccccc',
+			'=============',
+			'GGGGGGGGGGccc'
+		],
+		[//3
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=ocqgb=ywocq=',
+			'=cqgbp=wocqg=',
+			'=qgbpy=ocqgb=',
+			'=gbpyw=cqgbp=',
+			'=bpywo=qgbpy=',
+			'=pywoc=gbpyw=',
+			'=ywocq=bpywo=',
+			'=wocqg=pywoc=',
+			'=ocqgb=ywocq=',
+			'=cqgbp=wocqg=',
+			'=qgbpy=ocqgb=',
+			'=gbpyw=cqgbp=',
+			'=bpywo=qgbpy=',
+			'=pywoc=gbpyw='
+		],
+		[//4
+			'=============',
+			'===y=====y===',
+			'===y=====y===',
+			'====y===y====',
+			'====y===y====',
+			'===ggggggg===',
+			'===ggggggg===',
+			'==ggrgggrgg==',
+			'==ggrgggrgg==',
+			'=ggggggggggg=',
+			'=ggggggggggg=',
+			'=ggggggggggg=',
+			'=g=ggggggg=g=',
+			'=g=g=====g=g=',
+			'=g=g=====g=g=',
+			'====gg=gg====',
+			'====gg=gg===='
+		],
+		[//5
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=GoGoGoGoG=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'b=r=q=c=q=r=b',
+			'o=o=G=o=G=o=o',
+			'b=r=q=c=q=r=b'
+		],
+		[//6
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=====yyp=====',
+			'====yyppb====',
+			'===yyppbbr===',
+			'===yppbbrr===',
+			'==yppbbrrqq==',
+			'==ppbbrrqqc==',
+			'==pbbrrqqcc==',
+			'==bbrrqqcco==',
+			'==brrqqccoo==',
+			'==rrqqccoow==',
+			'===qqccoow===',
+			'===qccooww===',
+			'====cooww====',
+			'=====oww====='
+		],
+		[//7
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'===G=G=G=G===',
+			'=G=========G=',
+			'=GG=G===G=GG=',
+			'======w======',
+			'=G===GoG===G=',
+			'===G==c==G===',
+			'======q======',
+			'===G==r==G===',
+			'=G===GbG===G=',
+			'======p======',
+			'=GG=G===G=GG=',
+			'=G=========G=',
+			'===G=G=G=G==='
+		],
+		[//8
+			'=============',
+			'=============',
+			'=GbG=====GbG=',
+			'=GqG=====GqG=',
+			'=GcG=====GcG=',
+			'=GGG=====GGG=',
+			'=============',
+			'====pwwwy====',
+			'====poooy====',
+			'====pcccy====',
+			'====pqqqy====',
+			'====prrry====',
+			'====pbbby===='
+		],
+		[//9
+			'=G===========',
+			'=============',
+			'=G===========',
+			'=G===========',
+			'=G===========',
+			'=G=====b=====',
+			'=G====bcb====',
+			'=G===bcwcb===',
+			'=G==bcwcwcb==',
+			'=G=bcwcgcwcb=',
+			'=G==bcwcwcb==',
+			'=G===bcwcb===',
+			'=G====bcb====',
+			'=G=====b=====',
+			'=G===========',
+			'=G===========',
+			'=G===========',
+			'=GGGGGGGGGGGG'
+		],
+		[//10
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=ggggggggggg=',
+			'=g=========g=',
+			'=g=ggggggg=g=',
+			'=g=g=====g=g=',
+			'=g=g=ggg=g=g=',
+			'=g=g=g=g=g=g=',
+			'=g=g=ggg=g=g=',
+			'=g=g=====g=g=',
+			'=g=ggggggg=g=',
+			'=g=========g=',
+			'=ggggggggggg='
+		],
+		[//11
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'GGGGGGGGGGGGG',
+			'====G=====Gp=',
+			'=Gw-G=====G==',
+			'=G==G==G==G==',
+			'=G==Gq=G==G==',
+			'=G==G==G==G==',
+			'=G=oG==G=bG==',
+			'=G==G==G==G==',
+			'=G==G==G==G==',
+			'=G==G=rG==G==',
+			'=G==G==G==G==',
+			'=Gc====G=====',
+			'=G=====G====y',
+			'=GGGGGGGGGGGG'
+		],
+		[//12
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=yyy=www=yyy=',
+			'=ppp=ooo=ppp=',
+			'=bbb=ccc=bbb=',
+			'=rrr=qqq=rrr=',
+			'=qqq=rrr=qqq=',
+			'=ccc=bbb=ccc=',
+			'=ooo=ppp=ooo=',
+			'=www=yyy=www='
+		],
+		[//13
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'bbbbbbbbbbbbb',
+			'G===========G',
+			'bbbbbbbbbbbbb',
+			'=============',
+			'ogggggggggggo',
+			'G===========G',
+			'wwwwwwwwwwwww',
+			'=============',
+			'cgggggggggggc',
+			'G===========G',
+			'rrrrrrrrrrrrr',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'G===========G'
+		],
+		[//14
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'cwGcccccccGwc',
+			'cwyGcccccGqwc',
+			'cwyyGcccGqqwc',
+			'cwyyyGwGqqqwc',
+			'cwyyyywqqqqwc',
+			'cwyyyywqqqqwc',
+			'cwyyyywqqqqwc',
+			'cgyyyywqqqqgc',
+			'ccgyyywqqqgcc',
+			'cccgyywqqgccc',
+			'ccccgywqgcccc',
+			'cccccgwgccccc'
+		],
+		[//15
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'======G======',
+			'====ww=ww====',
+			'==ww==G==ww==',
+			'ww==oo=oo==ww',
+			'==oo==G==oo==',
+			'oo==yy=yy==oo',
+			'==yy==G==yy==',
+			'yy==qq=qq==yy',
+			'==qq==G==qq==',
+			'qq==rr=rr==qq',
+			'==rr==G==rr==',
+			'rr==bb=bb==rr',
+			'==bb=====bb==',
+			'bb=========bb'
+		],
+		[//16
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'======g======',
+			'===bbbgqqq===',
+			'==bbbwwwqqq==',
+			'==bbwwwwwqq==',
+			'=bbbwwwwwqqq=',
+			'=bbbwwwwwqqq=',
+			'=bbbwwwwwqqq=',
+			'=g==g=g=g==g=',
+			'======g======',
+			'======g======',
+			'======g======',
+			'====G=G======',
+			'====GGG======',
+			'=====G======='
+		],
+		[//17
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'o=GyyyyyyyG=o',
+			'o=GGyyyyyGG=o',
+			'o=G=GyyyG=G=o',
+			'o=G=pGyGb=G=o',
+			'o=G=p=g=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'o=G=p=q=b=G=o',
+			'oGGGp=q=bGGGo'
+		],
+		[//18
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==GGGGGGGGG==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpypbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==qrbpGpbrq==',
+			'==GGGGGGGGG=='
+		],
+		[//19
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'GwGoGcGqGrGbG',
+			'GpGgGgGgGgGyG',
+			'=============',
+			'GpG=G=G=G=G=G',
+			'G=GpG=G=G=G=G',
+			'G=G=GpG=G=G=G',
+			'G=G=G=GpG=G=G',
+			'G=G=G=G=GpG=G',
+			'===========p=',
+			'==G=G=G=GpG==',
+			'==G=G=GpG=G==',
+			'==G=GpG=G=G==',
+			'===pG=G=G====',
+			'=p====G======'
+		],
+		[//20
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=GoooooooooG=',
+			'=G=========G=',
+			'=G=GGGGGGG=G=',
+			'=G=G=====G=G=',
+			'=G=G=====G=G=',
+			'=G=G=rrr=G=G=',
+			'=G=G=qqq=G=G=',
+			'=G=G=bbb=G=G=',
+			'=G=G=www=G=G=',
+			'=G=G=====G=G=',
+			'=G=GcccccG=G=',
+			'=G=========G=',
+			'=G=========G=',
+			'=GGGGGGGGGGG='
+		],
+		[//21
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yyyyyyyyyyyyy',
+			'yyyyyyyyyyyyy',
+			'=============',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'rrG=GrrrG=Grr',
+			'=============',
+			'wwwwwwwwwwwww',
+			'wwwwwwwwwwwww'
+		],
+		[//22
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ccccccccccccc',
+			'=============',
+			'==ggg=ggg=ggg',
+			'==gqg=gqg=gqg',
+			'==ggg=ggg=ggg',
+			'=============',
+			'=ggg=ggg=ggg=',
+			'=grg=grg=grg=',
+			'=ggg=ggg=ggg=',
+			'=============',
+			'ggg=ggg=ggg==',
+			'gbg=gbg=gbg==',
+			'ggg=ggg=ggg=='
+		],
+		[//23
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=====www=====',
+			'=====www=====',
+			'=====www=====',
+			'====wwwww====',
+			'====wbwbw====',
+			'===wbbwbbw===',
+			'===bbbbbbb===',
+			'==bbbbbbbbb==',
+			'==bbbbbbbbb==',
+			'=bbbbbbbbbbb=',
+			'bbbbbbbbbbbbb'
+		],
+		[//24
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'rrrrrrrrrrrrr',
+			'qqqqqqqqqqqqq',
+			'bbbbbbbbbbbbb',
+			'GGGGGgggGGGGG',
+			'GrrrG===GbbbG',
+			'GrrrG===GbbbG',
+			'G===========G',
+			'G===========G',
+			'G===GqqqG===G',
+			'G===GqqqG===G',
+			'GgggGGGGGgggG'
+		],
+		[//25
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==GgggG======',
+			'=G=====G=====',
+			'G==ccc==G====',
+			'G=qqqqq=G====',
+			'G=bbbbb=G====',
+			'G==ppp==G====',
+			'=G=====G=====',
+			'==GGGGG======'
+		],
+		[//26
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'ggggggggggggg',
+			'yyyyyyyyyyyyy',
+			'ggggggggggggg',
+			'=============',
+			'ggggggggggggg',
+			'rrrrrrrrrrrrr',
+			'ggggggggggggg'
+		],
+		[//27
+			'=============',
+			'=============',
+			'=============',
+			'bbbbbbbbbbbbb',
+			'bGGGGpGpGGGGb',
+			'bG=========Gb',
+			'bGp=======pGb',
+			'bGpp=====ppGb',
+			'bGppp===pppGb',
+			'=bGppp=pppGb=',
+			'==bGpppppGb==',
+			'===bGpppGb===',
+			'====bGpGb====',
+			'=====bpb=====',
+			'======b======'
+		],
+		[//28
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yyyyyG=Gyyyyy',
+			'pppppG=Gppppp',
+			'GGwGGG=GGGwGG',
+			'bbbbbG=Gbbbbb',
+			'rrrrrG=Grrrrr',
+			'qqqqqG=Gqqqqq',
+			'ggwggG=Gggwgg',
+			'cccccG=Gccccc',
+			'oooooG=Gooooo',
+			'wwwwwG=Gwwwww'
+		],
+		[//29
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'yp===========',
+			'ypbr=========',
+			'ypbrqc=======',
+			'ypbrqcow=====',
+			'ypbrqcowyp===',
+			'gpbrqcowypbr=',
+			'=Ggrqcowypbrq',
+			'===Ggcowypbrq',
+			'=====Ggwypbrq',
+			'=======Ggpbrq',
+			'=========Ggrq',
+			'===========Gg'
+		],
+		[//30
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'q=r=b=p=y=w=o',
+			'g=g=g=g=g=g=g',
+			'=b=r=q=c=o=w=',
+			'=g=g=g=g=g=g=',
+			'c=q=r=b=p=y=w',
+			'g=g=g=g=g=g=g',
+			'=p=b=r=q=c=o=',
+			'=g=g=g=g=g=g=',
+			'o=c=q=r=b=p=y',
+			'g=g=g=g=g=g=g',
+			'=y=p=b=r=q=c=',
+			'=g=g=g=g=g=g=',
+			'w=o=c=q=r=b=p',
+			'g=g=g=g=g=g=g'
+		],
+		[//31
+			'=============',
+			'=============',
+			'=============',
+			'=============',
+			'==G=G=G=G=G==',
+			'==G=G=G=G=G==',
+			'==G=G=G=Gqq==',
+			'==G=G=G=G=G==',
+			'==G=G=Grrrr==',
+			'==G=G=G=G=G==',
+			'==G=Gbbbbbb==',
+			'==G=G=G=G=G==',
+			'==Gpppppppp==',
+			'==G=G=G=G=G==',
+			'==yyyyyyyyy==',
+			'==ggggggggg=='
+		],
+		[//32//SOLOLEARN LOGO
+			'=====oooo====',
+			'===qoooooo===',
+			'==qqoooo=====',
+			'=qq=oo==rrrr=',
+			'=qqoo=rrrrrr=',
+			'=qqo=====p=rr',
+			'bqqo=====pp=r',
+			'bqqo======ppr',
+			'bqqo======pp=',
+			'b=q=======pp=',
+			'bbqq=====cpp=',
+			'bb=q=====cpp=',
+			'bbbqq====cpp=',
+			'=bb==bb=ccpp=',
+			'=bbbbb=cccpp=',
+			'======cccpp==',
+			'===ccccc=pp==',
+			'====ccccpp==='
+		],
+		[//33
+			'GG'//good game (another !fun joke)
+		]
+	];
+	keys = {}; //keys object, used for determine, which of buttons or keys are active (inactive)
+	player = new Platform(SW / 2, SH - H);
+	platformSpeed = 4;
+	ballSpeed = platformSpeed;
+	capsuleSpeed = 3;
+	laserSpeed = capsuleSpeed;
+	balls = [];
+	balls[0] = new Ball(player.x + player.w / 2, player.y - H / 2, true);
+	bricks = [];
+	for(var q = 0; q < maps.length; q += 1) { //here we watch all of the maps and create bricks array for this game
+		m = maps[q];
+		bricks[q] = [];
+		for(var y = 0; y < m.length; y += 1) {
+			for(var x = 0; x < m[y].length; x += 1) {
+				if(m[y][x] === '=') continue;
+				bricks[q].push(new Brick(x * W + W, y * H + W, m[y][x]));
+			}
+		}
+	}
+	strip = document.querySelector('#strip'); //beauty wears no pants (another !fun joke)
+	strip.style.width = width + 'px';
+	strip.style.height = H + 'px';
+	controls = document.querySelector('#controls');
+	for(var q = 0; q < controls.children.length; q += 1) {
+		controls.children[q].style.width = CW + 'px';
+		controls.children[q].style.height = (CH - H) + 'px';
+		controls.children[q].style.fontSize = W + 'px';
+	}
+	controls.addEventListener('mousedown', down, false);
+	controls.addEventListener('mouseup', up, false);
+	controls.addEventListener('touchstart', down, false);
+	controls.addEventListener('touchend', up, false);
+	window.addEventListener('keydown', down, false);
+	window.addEventListener('keyup', up, false);
+	gameMenu = document.querySelector('#game-menu');
+	tilting = false;
+	tiltingInput = document.querySelector('#tilting-input');
+	tiltingInput.addEventListener('change', function() {
+		playBtnSnd();
+		tilting = !tilting;
+		tiltingMin.checked = !tiltingMin.checked;
+	}, false);
+	sounding = false;
+	soundingInput = document.querySelector('#sounding-input');
+	soundingInput.addEventListener('change', function() {
+		playBtnSnd();
+		sounding = !sounding;
+		soundingMin.checked = !soundingMin.checked;
+	}, false);
+	factor = 1E3;
+	auto = false;
+	currentLvl = 0;
+	currentBg = 0;
+	sounds = {};
+	volume = 0.5;
+	form = document.forms[0];
+	vols = form.elements.volume;
+	for(var q = 0; q < vols.length; q += 1) {
+		vols[q].addEventListener('change', setVol, false);
+	}
+	playBtn = document.getElementById('play-btn');
+	controlsBtn = document.getElementById('controls-btn');
+	optionsBtn = document.getElementById('options-btn');
+	aboutBtn = document.getElementById('about-btn');
+	backBtns = document.getElementsByClassName('back-btn');//[]
+	gameMenu = document.getElementById('game-menu');
+	gameStory = document.getElementById('game-story');
+	gameControls = document.getElementById('game-controls');
+	gameOptions = document.getElementById('game-options');
+	gameAbout = document.getElementById('game-about');
+	gameOver = document.getElementById('game-over');
+	startBtn = document.getElementById('start-btn');
+	playBtn.addEventListener('click', function() {
+		showAndHide(gameStory, gameMenu);
+		playBtnSnd();
+	}, false);
+	controlsBtn.addEventListener('click', function() {
+		showAndHide(gameControls, gameMenu);
+		playBtnSnd();
+	}, false);
+	optionsBtn.addEventListener('click', function() {
+		showAndHide(gameOptions, gameMenu);
+		playBtnSnd();
+	}, false);
+	aboutBtn.addEventListener('click', function() {
+		showAndHide(gameAbout, gameMenu);
+		playBtnSnd();
+	}, false);
+	for(var q = 0; q < backBtns.length; q += 1) {
+		backBtns[q].addEventListener('click', function() {
+			showAndHide(gameMenu, [gameControls, gameOptions, gameAbout, gameOver]);
+			playBtnSnd();
+		}, false);
+	}
+	startBtn.addEventListener('click', function() {
+		showAndHide(null, gameStory);
+		playBtnSnd();
+	}, false);
+	limit = 1E2;
+	capsules = [];
+	lasers = [];
+	portals = [];
+	window.addEventListener('devicemotion', function(e) {
+		if(!e.accelerationIncludingGravity || !tilting) return;
+		var accel = e.accelerationIncludingGravity;
+		var xa = accel.x;
+		if(xa > 1) {
+			keys['left'] = true;
+		} else if(xa < -1) {
+			keys['right'] = true;
+		} else {
+			keys['left'] = false;
+			keys['right'] = false;
+		}
+	}, false);
+	opt = document.querySelector('#opt');
+	optM = document.querySelector('#options-min-menu');
+	close = document.querySelector('#close');
+	opt.addEventListener('click', function() {
+		playBtnSnd();
+		if(optM.clientHeight) {
+			optM.style.display = 'none';
+			close.style.display = 'none';
+		} else {
+			optM.style.display = 'block';
+			close.style.display = 'inline';
+		}
+	}, false);
+	tiltingMin = document.querySelector('#tilting-input-min');
+	tiltingMin.addEventListener('change', function() {
+		playBtnSnd();
+		tilting = !tilting;
+		tiltingInput.checked = !tiltingInput.checked;
+	}, false);
+	soundingMin = document.querySelector('#sounding-input-min');
+	soundingMin.addEventListener('change', function() {
+		playBtnSnd();
+		sounding = !sounding;
+		soundingInput.checked = !soundingInput.checked;
+	}, false);
+	soundCheck = document.querySelector('#sound-check');
+	soundCheck.addEventListener('click', function() {
+		if(sounding) {
+			sounds.menuBtn.play();
+		}
+	}, false);
+	loading = document.querySelector('#loading');
+	restart = document.querySelector('#restart');
+	restart.addEventListener('click', reinit, false);
+	inner = '';
+	window.addEventListener('dblclick', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('selectstart', function(e) { e.preventDefault(); }, false);
+	window.addEventListener('dragstart', function(e) { e.preventDefault(); }, false);
+	createSounds(); //ok, variables and listeners are done, now we can call functions to: create sounds,
+	createBgImages(); //create images
+	setGame(levels); //setting our cycle to main function
+	startGame(); //and finally, start our game, uh yeah
+	loading.style.display = 'none'; //hide loading div
+}//init end
+function reinit() { //this function is used, when game is over to redefine some things, such as score, positions, bricks array, background
+	playBtnSnd();
+	showAndHide(gameMenu, gameOver);
+	points = 0;
+	score = 0;
+	lives = 3;
+	currentLvl = 0;
+	level = currentLvl + 1;
+	player = new Platform(SW / 2, SH - H);
+	balls[0] = new Ball(player.x + player.w / 2, player.y - H / 2, true);
+	bricks.length = 0;
+	for(var q = 0; q < maps.length; q += 1) {
+		m = maps[q];
+		bricks[q] = [];
+		for(var y = 0; y < m.length; y += 1) {
+			for(var x = 0; x < m[y].length; x += 1) {
+				if(m[y][x] === '=') continue;
+				bricks[q].push(new Brick(x * W + W, y * H + W, m[y][x]));
+			}
+		}
+	}
+	currentBg = 0;
+}//reinit end
+function Platform(x, y) { //player (platform) class
+	this.x = x;
+	this.y = y;
+	this.s = platformSpeed;
+	this.d = 0;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.expandable = true;
+	this.w = W * 2;
+	this.armed = false;
+}
+Platform.prototype.setSpeed = function(speed) {
+	this.s = speed;
+};
+Platform.prototype.setX = function(x) {
+	this.x = x;
+};
+Platform.prototype.setW = function(w) {
+	this.w = w;
+};
+Platform.prototype.draw = function() {
+	if(this.armed) {
+		drawSR(this.x, this.y, this.w, H, colors[0]);
+		drawFR(this.x, this.y, this.w, H, colors[5]);
+		drawFR(this.x, this.y, this.w, H2, colors[34]);
+		drawFR(this.x + this.w / 8, this.y + H / 2, this.w / 4, H / 2, colors[2]);
+		drawFR(this.x + this.w - this.w / 8 - this.w / 4, this.y + H / 2, this.w / 4, H / 2, colors[2]);
+		drawSR(this.x + this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawSR(this.x + this.w - this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawFR(this.x + this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+		drawFR(this.x + this.w - this.w / 4 - W10 / 2, this.y - W10, W10, H + W10, colors[2]);
+	} else {
+		drawSR(this.x, this.y, this.w, H, colors[0]);
+		drawFR(this.x, this.y, this.w, H, colors[5]);
+		drawFR(this.x, this.y, this.w, H2, colors[34]);
+	}
+};
+Platform.prototype.move = function() {
+	if(keys['left']) {
+		this.d = -1;
+		this.s = platformSpeed;
+	}
+	if(keys['right']) {
+		this.d = 1;
+		this.s = platformSpeed;
+	}
+	if(!keys['right'] && !keys['left']) this.d = this.s = 0;
+	this.nx = this.x + this.d * this.s;
+	if(portals.length) {
+		if(sidesColl(this.nx, this.ny, this.nx + this.w, this.ny + H, portals[portals.length - 1].x - H, portals[portals.length - 1].y, portals[portals.length - 1].x + W, portals[portals.length - 1].y + H * 3)) {
+			if(sounding) sounds.portal.play();
+			portals[portals.length - 1].deletable = true;
+			bricks[currentLvl].length = 0;
+		}
+	}
+	if(this.nx <= W || this.nx >= SW + W - this.w) return;
+	this.x = this.nx;
+};
+function Ball(x, y, s) { //ball class
+	this.x = x;
+	this.y = y;
+	this.sticky = s ? true : false;
+	this.s = ballSpeed;
+	this.dx = 1;
+	this.dy = -1;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.deletable = false;
+	this.a = dtr(45);
+	this.stickable = false;
+}
+Ball.prototype.setSpeed = function(speed) {
+	this.s = speed;
+};
+Ball.prototype.draw = function() {
+	drawSC(this.x, this.y, H / 2 - W10, colors[0]);
+	drawFC(this.x, this.y, H / 2 - W10, colors[6]);
+};
+Ball.prototype.move = function() {
+	this.a %= Math.PI * 2;
+	if(this.a < 0) this.a += Math.PI * 2;
+	if(!this.sticky) {
+		this.nx = this.x + this.dx * this.s * Math.cos(this.a);
+		this.ny = this.y + this.dy * this.s * Math.sin(this.a);
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'x') {
+			this.dx = -this.dx;
+		}
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'y') {
+			this.dy = -this.dy;
+		}
+		if(wallColl(this.nx - H / 2, this.ny - H / 2, this.nx + H / 2, this.ny + H / 2, W, W, SW + W, SH + W) === 'z') {
+			this.deletable = true;
+		}
+		for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) {
+			if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'left' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'right') {
+				this.dx = -this.dx;
+				bricks[currentLvl][q].lives -= 1;
+				if(sounding) sounds.brickDamaged.play();
+				break;
+			} else if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'bottom' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H}) === 'top') {
+				this.dy = -this.dy;
+				bricks[currentLvl][q].lives -= 1;
+				if(sounding) sounds.brickDamaged.play();
+				break;
+			}
+		}
+		if(this.stickable && rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x - H / 4, y: player.y - H / 4, w: player.w + H / 4, h: H + H / 4})) {
+			this.sticky = true;
+			return;
+		}
+		if(rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'left' || rectColl({x: this.nx - H / 2, y: this.ny - H / 2, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'right') {
+			this.dx = -this.dx;
+			this.y -= H;
+			this.dy = -this.dy;
+			if(keys['right'] && this.dx < 0) {
+				this.a -= 0.4;
+			} else if(keys['right'] && this.dx > 0) {
+				this.a += 0.4;
+			}
+			if(keys['left'] && this.dx > 0) {
+				this.a += 0.4;
+			} else if(keys['left'] && this.dx < 0) {
+				this.a -= 0.4;
+			}
+		}
+		if(rectColl({x: this.x, y: this.y, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'bottom' || rectColl({x: this.x, y: this.y, w: H / 2, h: H / 2}, {x: player.x, y: player.y, w: player.w, h: H}) === 'top') {
+			this.dy = -this.dy;
+			if(keys['right'] && this.dx < 0) {
+				this.dx = -this.dx;
+				this.a -= 0.2;
+			} else if(keys['right'] && this.dx > 0) {
+				this.a += 0.2;
+			}
+			if(keys['left'] && this.dx > 0) {
+				this.dx = -this.dx;
+				this.a += 0.2;
+			} else if(keys['left'] && this.dx < 0) {
+				this.a -= 0.2;
+			}
+		}
+		this.nx = this.x + this.dx * this.s * Math.cos(this.a);
+		this.ny = this.y + this.dy * this.s * Math.sin(this.a);
+		this.x = this.nx;
+		this.y = this.ny;
+	}
+	if(this.sticky) {
+		if(keys['left']) {
+			this.dx = -1;
+			this.s = player.s;
+		}
+		if(keys['right']) {
+			this.dx = 1;
+			this.s = player.s;
+		}
+		if(!keys['right'] && !keys['left']) this.dx = this.s = 0;
+		this.nx = this.x + this.dx * this.s;
+		if(this.nx - H / 2 <= W || this.nx - H / 2 >= SW + W - H) return;
+		this.x = this.nx;
+	}
+	this.checkE();
+	this.checkZ(); //see, creating games is EZ = you just need to checkE() && checkZ(). (another !fun joke)
+	this.correctA();
+};
+Ball.prototype.checkE = function() { //check edges
+	if(this.x < 0 || this.y < 0 || this.x > width || this.y > height) {
+		this.deletable = true;
+	}
+};
+Ball.prototype.checkZ = function() { //some correction of ball position
+	if(wallColl(this.x - H / 4, this.y - H / 4, this.x + H / 4, this.y + H / 4, player.x, player.y, player.w, H) === 'z') {
+		this.y -= H;
+	}
+};
+Ball.prototype.correctA = function() { //correction of ball angle
+	if(Math.abs(rtd(this.a)) <= 10 || Math.abs(rtd(this.a)) >= 350 || (Math.abs(rtd(this.a)) > 170 && Math.abs(rtd(this.a)) < 190)) {
+		//console.log('corrected');
+		this.a = Math.random(0, 1) ? this.a + 0.2 : this.a - 0.2;
+		this.y -= H;
+	}
+};
+function Brick(x, y, type) { //brick class (oh, really?) (another !fun joke)
+	this.x = x;
+	this.y = y;
+	this.type = type;
+	this.lives = this.type === 'G' ? 6 : this.type === 'g' ? random(2, 5) : 1;
+	this.deletable = false;
+	this.c = this.defCP(this.type).c;
+	this.p = this.defCP(this.type).p;
+}
+Brick.prototype.defCP = function(t) {
+	var c = '#000000';
+	var p = 0;
+	switch(t) {
+		case 'g': c = colors[14]; p = 9; break;
+		case 'r': c = colors[15]; p = random(1, 8); break;
+		case 'y': c = colors[16]; p = random(1, 7); break;
+		case 'b': c = colors[17]; p = random(1, 6); break;
+		case 'p': c = colors[18]; p = random(1, 5); break;
+		case 'q': c = colors[19]; p = random(1, 4); break;
+		case 'w': c = colors[20]; p = random(1, 3); break;
+		case 'o': c = colors[21]; p = random(1, 2); break;
+		case 'c': c = colors[22]; p = 1; break;
+		case 'G': c = colors[23]; p = 10; break;
+		default: c = '#ffffff';
+	}
+	return {c: c, p: p};
+}
+Brick.prototype.checkL = function() {
+	if(this.lives <= 0) {
+		this.deletable = true;
+	}
+};
+Brick.prototype.draw = function() {
+	drawFR(this.x, this.y, W, H, this.c);
+	drawFR(this.x, this.y, W, H2, colors[34]);
+	if(this.lives > 1 && this.lives < 6) {
+		for(var q = 0; q < this.lives; q += 1) {
+			drawFR(this.x + W10 + W5 * q, this.y + H2, W10, H2 / 2, colors[15]);
+		}
+	}
+	if(this.lives > 1) {
+		drawFR(this.x + W10, this.y + H - W10, W - W10, W10, colors[0]);
+		drawFR(this.x + W - W10, this.y + W10, W10, H - W10, colors[0]);
+	}
+	drawSR(this.x, this.y, W, H, colors[0]);
+};
+function Capsule(x, y, t) { //game bonuses (prize capsules) class
+	this.x = x;
+	this.y = y;
+	this.t = t;
+	this.d = false;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.s = capsuleSpeed;
+	this.c = this.defC(this.t);
+}
+Capsule.prototype.defC = function(t) {
+	var c = '#FFFFFF';
+	switch(t) {
+		case 'E': c = colors[7]; break; //(E —— "expand") - increases the platform by 2 times
+		case 'D': c = colors[8]; break; //(D —— “divide”) - 2 more balls fly out of the ball
+		case 'L': c = colors[9]; break; //(L —— "laser") - sets a laser machines on the platform that can destroy bricks with a laser
+		case 'S': c = colors[10]; break; //(S —— "slow") - slows the ball
+		case 'B': c = colors[11]; break; //(B —— “breakthrough”) - creates a portal on the right (or left) side, a transition to the next level
+		case 'C': c = colors[12]; break; //(C —— “catch”) - the ball now sticks to the platform
+		case 'P': c = colors[13]; break; //(P —— “player”) - it adds an extra life
+	}
+	return c;
+};
+Capsule.prototype.draw = function() {
+	drawFR(this.x, this.y, W, H, this.c);
+	drawFR(this.x, this.y, W, H2 / 2, colors[34]);
+	drawFR(this.x + W10, this.y + H - W10, W - W10, W10, colors[6]);
+	drawFT(this.t, this.x + W2 - H / 2 + W10, this.y + H - W10, colors[1], H);
+};
+Capsule.prototype.move = function() {
+	this.ny = this.y + this.s;
+	if(sidesColl(this.nx, this.ny, this.nx + W, this.ny + H, player.x, player.y, player.x + player.w, player.y + H)) {
+		this.d = true;
+		switch(this.t) {
+			case 'E': changeState('expand'); break;
+			case 'D': changeState('divide'); break;
+			case 'L': changeState('laser'); break;
+			case 'S': changeState('slow'); break;
+			case 'B': changeState('breakthrough'); break;
+			case 'C': changeState('catch'); break;
+			case 'P': changeState('normal'); lives += 1; if(sounding) sounds.capsulePlayer.play(); break;
+		}
+	}
+	this.y = this.ny;
+};
+function Laser(x, y) { //class of lasers
+	this.x = x;
+	this.y = y;
+	this.s = laserSpeed;
+	this.nx = this.x;
+	this.ny = this.y;
+	this.d = false;
+}
+Laser.prototype.draw = function() {
+	drawFR(this.x, this.y, W10, W5, colors[6]);
+};
+Laser.prototype.move = function() {
+	this.ny = this.y - this.s;
+	for(var q = bricks[currentLvl].length - 1; q >= 0; q -= 1) {
+		if(rectColl({x: this.x, y: this.y, w: W10, h: W5}, {x: bricks[currentLvl][q].x, y: bricks[currentLvl][q].y, w: W, h: H})) {
+			this.d = true;
+			bricks[currentLvl][q].lives -= 1;
+		}
+	}
+	this.y = this.ny;
+};
+function Portal(x, y) { //the portal class is here
+	this.x = x;
+	this.y = y;
+	this.deletable = false;
+}
+Portal.prototype.draw = function() {
+	drawFR(this.x, this.y, H, H * 3, colors[29]);
+	drawFR(this.x + W10, this.y, W10, H * 3, colors[30]);
+	drawFR(this.x + H / 2 - W10 / 2, this.y, W10, H * 3, colors[30]);
+	drawFR(this.x + H - W10 * 2, this.y, W10, H * 3, colors[30]);
+};
+function changeState(state) { //this function is called, when any game state is changed
+	if(state === 'expand') {
+		if(sounding) sounds.capsuleExpand.play();
+		changeState('normal');
+		if(player.expandable) {
+			if(player.x <= SW / 2) {
+				player.setW(W * 4);
+				player.expandable = false;
+			} else {
+				player.setX(player.x - W * 2);
+				player.setW(W * 4);
+				player.expandable = false;
+			}
+		}
+	} else if(state === 'divide') {
+		if(sounding) sounds.capsuleDivide.play();
+		changeState('normal');
+		var x = balls[balls.length - 1].x;
+		var y = balls[balls.length - 1].y;
+		var a = balls[balls.length - 1].a;
+		var add = true;
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			if(balls[q].y > player.y + H || balls[q].sticky) {
+				add = false;
+				points += factor;
+			}
+		}
+		if(add) {
+			balls.push(new Ball(x, y, false));
+			balls.push(new Ball(x, y, false));
+		}
+		if(balls[balls.length - 1]) balls[balls.length - 1].a = a + 0.2;
+		if(balls[balls.length - 2]) balls[balls.length - 2].a = a - 0.2;
+	} else if(state === 'laser') {
+		if(sounding) sounds.capsuleLaser.play();
+		changeState('normal');
+		player.armed = true;
+	} else if(state === 'slow') {
+		if(sounding) sounds.capsuleSlow.play();
+		changeState('normal');
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			balls[q].setSpeed(ballSpeed / 2);
+		}
+		player.setSpeed(platformSpeed / 2);
+	} else if(state === 'breakthrough') {
+		if(sounding) sounds.capsuleBreakthrough.play();
+		changeState('normal');
+		if(!portals.length) {
+			var r = random(0, 1);
+			if(r) {
+				portals.push(new Portal(SW + W, SH - H * 2));
+			} else {
+				portals.push(new Portal(H, SH - H * 2));
+			}
+		}
+	} else if(state === 'catch') {
+		if(sounding) sounds.capsuleCatch.play();
+		changeState('normal');
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			balls[q].stickable = true;
+		}
+	} else if(state === 'normal') {
+		for(var q = balls.length - 1; q >= 0; q -= 1) {
+			if(balls[q]) balls[q].setSpeed(ballSpeed);
+			if(balls[q]) balls[q].stickable = false;
+			if(balls[q]) balls[q].sticky = false;
+		}
+		player.setSpeed(platformSpeed);
+		player.armed = false;
+		player.setW(W * 2);
+		player.expandable = true;
+	}
+}
+function rectColl(a, b) { //collision detection function, that receives two objects a = {x: ax, y: ay, w: aw, h: ah} and b = {x: bx, y: by, w: bw, h: bh} and returns the side of collision
+	var side;
+	var dx = (a.x + a.w / 2) - (b.x + b.w / 2);
+	var dy = (a.y + a.h / 2) - (b.y + b.h / 2);
+	var halfSWidth = (a.w + b.w) / 2;
+	var halfSHeight = (a.h + b.h) / 2;
+	var width = halfSWidth * dy;
+	var height = halfSHeight * dx;
+	if(Math.abs(dx) <= halfSWidth && Math.abs(dy) <= halfSHeight) {
+		if(width > height) {
+			side = width > -height ? 'bottom' : 'left';
+		} else {
+			side = width > -height ? 'right' : 'top';
+		}
+	}
+	return side;
+}//rectColl end
+function wallColl(x1, y1, x2, y2, wx1, wy1, wx2, wy2) { //collision detection function, that receives four points, represented by top-left corner(x1, y1) and bottom-right corner(x2, y2) of object a, which inside of object b, with points of top-left corner(wx1, wy1) and bottom-right corner(wx2, wy2) (WUT?) (another !fun joke)
+	if(x1 <= wx1 || x2 >= wx2) return 'x';
+	if(y1 <= wy1/* || y2 >= wy2*/) return 'y';
+	if(y2 >= wy2) return 'z'; //why 'z'? because we create a 3D (4D) world (x, y, z, fourthDimension = imagination). (another !fun joke)
+}
+function sidesColl(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) { //collision detection function, that is same as previous, exception is those objects a and b are separate from each other
+	return (ax1 <= bx2 && ax2 >= bx1 && ay1 <= by2 && ay2 >= by1);
+}
+document.addEventListener('DOMContentLoaded', function() { //displaying our loader
+	if(!loading) {
+		document.querySelector('#loading').style.display = 'block';
+	} else {
+		loading.style.display = 'block';
+	}
+}, false);
+window.addEventListener('load', init, false); //when all things are loaded, initialize, then run
+//phew...it's done now. below you can find some styles for elements. thank you for your attension and have a nice time, see ya, stay code, sharp sharp <3
+/**/
+		/**/
+	</script>
+	<style>
+		/**/
+/**/
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+body * {
+	font-family: OldGameFatty;
+}
+#game {
+	display: block;
+}
+#strip {
+	display: flex;
+	color: #A5C942;
+	background-color: #A5C942;
+	align-items: center;
+	justify-content: center;
+}
+#controls {
+	display: flex;
+	background-color: #111203;
+}
+#controls div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #6D9D30;
+	border-left: 1px solid #A5C942;
+}
+#controls div:hover {
+	cursor: pointer;
+	background-color: #252908;
+	color: #A5C942;
+}
+#game-menu, #game-story, #game-controls, #game-options, #game-about, #game-over, #loading {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+}
+#game-menu {
+	z-index: 2;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 25, 0, 0.5), #252908), radial-gradient(#252908, #697E1E);
+	background-position: 0px 0px, 0px -50vh;
+	color: #A5C942;
+}
+#game-menu h1 {
+	text-decoration: underline;
+	letter-spacing: -2px;
+}
+#game-menu h1, #game-menu h2, .option {
+	color: #909F9C;
+}
+#menu-list {
+	list-style-type: none;
+	padding: 0;
+}
+#menu-list li {
+	padding: 10px;
+}
+#menu-list li span {
+	font-size: 1.5em;
+}
+#menu-list li:hover {
+	color: #6D9D30;
+	cursor: pointer;
+	text-shadow: -1px -1px #A5C942;
+}
+#game-story {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 25, 0.5), #000118), radial-gradient(#000118, #020AAF);
+	background-position: 0px 0px, 0px -50vh;
+	color: #DF9100;
+	font-size: 1.2em;
+	z-index: 3;
+}
+#game-controls {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #525152), radial-gradient(#525152, #BC6A02);
+	background-position: 0px 0px, 0px -50vh;
+	color: #DF9100;
+	font-size: 1.2em;
+	z-index: 4;
+}
+#game-options {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #740C07), radial-gradient(#740C07, #BC6A02);
+	background-position: 0px 0px, 0px -50vh;
+	color: #020773;
+	font-size: 1.2em;
+	z-index: 5;
+}
+
+#tilting-input, #sounding-input, .volume-radio, #tilting-input-min, #sounding-input-min {
+	display: none;
+}
+#tilting-label:hover, #sounding-label:hover, .volume-label, #tilting-label-min:hover, #sounding-label-min:hover, #opt {
+	cursor: pointer;
+}
+#tilting-label:before, #sounding-label:before, .volume-label:before, #tilting-label-min:before, #sounding-label-min:before {
+	display: inline-block;
+	background-color: #740C07;
+	content: "-";
+	border-radius: 5px;
+	width: 20px;
+	height: 20px;
+	margin-right: 20px;
+}
+.volume-label:before {
+	border-radius: 50%;
+}
+#tilting-input:checked ~ #tilting-label:before, #sounding-input:checked ~ #sounding-label:before, #tilting-input-min:checked ~ #tilting-label-min:before, #sounding-input-min:checked ~ #sounding-label-min:before {
+	background-color: #006100;
+	content: "+";
+}
+.volume-radio:checked + .volume-label:before {
+	background-color: #006100;
+	content: "+";
+}
+#game-about {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #525152), radial-gradient(#525152, #AFAFAF);
+	background-position: 0px 0px, 0px -50vh;
+	color: #A5C942;
+	font-size: 1.2em;
+	z-index: 6;
+}
+#game-over {
+	display: none;
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(25, 25, 25, 0.5), #D13056), radial-gradient(#D13056, #FE8CA7);
+	background-position: 0px 0px, 0px -50vh;
+	color: #111203;
+	font-size: 1.2em;
+	z-index: 7;
+}
+#loading {
+	display: none;
+	background-color: white;
+	color: #111203;
+	font-size: 1.2em;
+	z-index: 8;
+}
+.btn {
+	font-size: 1.2em;
+	background-image: linear-gradient(#BC6A02, #C2A50D);
+	background-position: 0px -15px;
+	color: #740C07;
+	border: 1px solid #909F9C;
+	border-radius: 5px;
+}
+.btn:hover {
+	cursor: pointer;
+	color: #121138;
+	border: 1px solid #C7D7C8;
+	background-image: linear-gradient(#C2A50D, #BC6A02);
+}
+.line-under {
+	background-image: radial-gradient(#252908 5%, rgba(37, 41, 8, 0.5) 15%, rgba(0, 0, 0, 0) 40%);
+}
+#game-options-min {
+	background-color: #252908;
+	color: #A5C942;
+	display: block;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 1;
+	border-radius: 5px;
+}
+#options-min-menu, #close {
+	display: none;
+	color: #A2BF90;
+}
+.text-min {
+	font-size: 0.8em;
+}
+/**/
+		/**/
+	</style>
+<!-- Hello, friends! -->
+<!-- First of all, sorry for my english skill. If you not afraid of it, continue. -->
+<!-- If you want to know, how to create a simple HTML5 game from scratch (without frameworks or libraries, just pure JavaScript), then welcome. -->
+<!-- In other case, run this code and have a nice play. -->
+<!-- It isn't a tutorial, but if you have some time, maybe you can read my code. -->
+<!-- I will be so happy, if you learn something from it, as well as you may teach me some cool stuff too, comment, if it's true. -->
+<!-- It far isn't a perfect game code, so, if you find some bugs or catch any errors, please, comment them. -->
+<!-- In case of any ideas or suggestions you have, how to improve this code, do not shy, comment. -->
+<!-- If you have any questions about this code, ask them in comments and I will explain to you any line of the code. -->
+<!-- What's where: -->
+<!-- All main code is in this (HTML) tab: HTML, JS and CSS. -->
+<!-- Important: -->
+<!-- CSS or JS tabs may cause your device freezing, so be careful. -->
+<!-- In CSS tab lye free font, encoded in base64 form. -->
+<!-- In JS tab sounds sources, encoded in base64 form can be found. -->
+<!-- Code structure (HTML tab): -->
+<!-- 0. head with some simple styles for loader. -->
+<!-- 1. HTML carcass. -->
+<!-- 2. JavaScript game code. -->
+<!-- 3. styles for page. -->
+<!-- There is alot of scrolling. -->
+<!-- Enjoy and thank you. <3 -->
+</body>
+</html>
